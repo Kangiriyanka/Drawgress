@@ -6,12 +6,29 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct ImageDictApp: App {
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
+    
+    // Place your init first
+    init() {
+        do {
+            container = try ModelContainer(for: DrawingPrompt.self)
+        } catch {
+            fatalError("Failed to create ModelContainer for DrawingPrompt")
         }
     }
+    let container: ModelContainer
+    
+    var body: some Scene {
+        WindowGroup {
+            ContentView(modelContext: container.mainContext)
+        }
+        .modelContainer(container)
+        
+        
+    
+    }
 }
+
