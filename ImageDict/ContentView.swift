@@ -23,6 +23,12 @@ struct ContentView: View {
             List(viewModel.prompts) { prompt in
                 NavigationLink(value: prompt) {
                     HStack {
+                        Image(uiImage: prompt.getCoverPhoto ?? Constants.placeholder)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width:50, height: 50)
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                            .padding(.trailing)
                         Text(prompt.title)
                         
                     }

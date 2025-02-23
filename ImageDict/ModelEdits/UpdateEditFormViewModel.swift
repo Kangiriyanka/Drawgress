@@ -6,7 +6,7 @@
 //
 
 
-// When we add a new DrawingPrompt, we will have to add the first picture associated with that prompt or we could leave it nil
+
 import UIKit
 
 @Observable
@@ -22,6 +22,7 @@ class UpdateEditFormViewModel {
             return Constants.placeholder
         }
     }
+    var cameraImage: UIImage?
     var prompt:  DrawingPrompt?
     
     

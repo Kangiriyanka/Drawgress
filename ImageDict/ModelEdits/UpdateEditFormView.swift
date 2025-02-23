@@ -14,6 +14,8 @@ struct UpdateEditFormView: View {
     @Environment(\.dismiss) var dismiss
     @State var vm : UpdateEditFormViewModel
     @State private var imagePicker = ImagePicker()
+    @State private var showCamera = false
+    @State private var cameraError: CameraPermission.CameraError?
     
     var body: some View {
         NavigationStack {
@@ -26,43 +28,69 @@ struct UpdateEditFormView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 12))
                     .padding()
                 
-               HStack {
-                   Spacer()
-                   Button {
-                       if vm.isUpdating {
-                           vm.updatePrompt()
-                           
-                       }
-                       
-                       else {
-                           
-                           
-                           
-                       }
-                       
-                   } label: {
-                       Text(vm.isUpdating ? "Update" : "Add")
-                   }
-                   .buttonStyle(.borderedProminent)
-                   .disabled(vm.isDisabled)
-                
+                HStack {
+                    Spacer()
+                    Button {
+                        if vm.isUpdating {
+                            vm.updatePrompt()
+                            dismiss()
+                            
+                        }
+                        
+                        else {
+                            
+                            
+                            
+                        }
+                        
+                    } label: {
+                        Text(vm.isUpdating ? "Update" : "Add")
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .disabled(vm.isDisabled)
+                    
                     if vm.coverPhoto != nil {
                         Button("Clear Image") {
-                    
+                            
                             vm.clearImage()
                             
                         }
                         .buttonStyle(.borderedProminent)
                     }
                 }
-               
+                
             }
             .onAppear {
                 imagePicker.setup(vm)
             }
+            .onChange(of: vm.cameraImage) {
+                if let image = vm.cameraImage {
+                    vm.coverPhoto = image.jpegData(compressionQuality: 0.8)
+                }
+            }
             .toolbar {
                 ToolbarItemGroup {
-                    Button("Camera", systemImage: "camera") {}
+                    Button("Camera", systemImage: "camera") {
+                        if let error = CameraPermission.checkPermissions(){
+                            cameraError = error
+                        }
+                        else {
+                            showCamera.toggle()
+                        }
+                    }
+                    .alert(isPresented: .constant(cameraError != nil), error: cameraError) { _ in
+                                                Button("OK") {
+                                                    cameraError = nil
+                                                }
+                                            } message: { error in
+                                                Text(error.recoverySuggestion ?? "Try again later")
+                                            }
+                                            .sheet(isPresented: $showCamera) {
+                                                UIKitCamera(selectedImage: $vm.cameraImage)
+                                                    .ignoresSafeArea(.all)
+                                                    
+                                            }
+                    
                     PhotosPicker(selection: $imagePicker.selectedItem) {
                         Label("Photos", systemImage: "photo")
                     }
@@ -76,7 +104,7 @@ struct UpdateEditFormView: View {
                 }
             }
         }
-       
+        
     }
 }
 
