@@ -24,25 +24,25 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		823B44612D6784B3009335A3 /* ImageDict.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageDict.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		823B44712D6784B4009335A3 /* ImageDictTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImageDictTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		823B447B2D6784B4009335A3 /* ImageDictUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImageDictUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		823B44612D6784B3009335A3 /* Drawgress.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Drawgress.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		823B44712D6784B4009335A3 /* DrawgressTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DrawgressTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		823B447B2D6784B4009335A3 /* DrawgressUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DrawgressUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		823B44632D6784B3009335A3 /* ImageDict */ = {
+		823B44632D6784B3009335A3 /* Drawgress */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = ImageDict;
+			path = Drawgress;
 			sourceTree = "<group>";
 		};
-		823B44742D6784B4009335A3 /* ImageDictTests */ = {
+		823B44742D6784B4009335A3 /* DrawgressTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = ImageDictTests;
+			path = DrawgressTests;
 			sourceTree = "<group>";
 		};
-		823B447E2D6784B4009335A3 /* ImageDictUITests */ = {
+		823B447E2D6784B4009335A3 /* DrawgresstUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = ImageDictUITests;
+			path = DrawgresstUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -75,9 +75,9 @@
 		823B44582D6784B3009335A3 = {
 			isa = PBXGroup;
 			children = (
-				823B44632D6784B3009335A3 /* ImageDict */,
-				823B44742D6784B4009335A3 /* ImageDictTests */,
-				823B447E2D6784B4009335A3 /* ImageDictUITests */,
+				823B44632D6784B3009335A3 /* Drawgress */,
+				823B44742D6784B4009335A3 /* DrawgressTests */,
+				823B447E2D6784B4009335A3 /* DrawgresstUITests */,
 				823B44622D6784B3009335A3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -85,9 +85,9 @@
 		823B44622D6784B3009335A3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				823B44612D6784B3009335A3 /* ImageDict.app */,
-				823B44712D6784B4009335A3 /* ImageDictTests.xctest */,
-				823B447B2D6784B4009335A3 /* ImageDictUITests.xctest */,
+				823B44612D6784B3009335A3 /* Drawgress.app */,
+				823B44712D6784B4009335A3 /* DrawgressTests.xctest */,
+				823B447B2D6784B4009335A3 /* DrawgressUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -95,9 +95,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		823B44602D6784B3009335A3 /* ImageDict */ = {
+		823B44602D6784B3009335A3 /* Drawgress */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 823B44852D6784B4009335A3 /* Build configuration list for PBXNativeTarget "ImageDict" */;
+			buildConfigurationList = 823B44852D6784B4009335A3 /* Build configuration list for PBXNativeTarget "Drawgress" */;
 			buildPhases = (
 				823B445D2D6784B3009335A3 /* Sources */,
 				823B445E2D6784B3009335A3 /* Frameworks */,
@@ -108,18 +108,18 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				823B44632D6784B3009335A3 /* ImageDict */,
+				823B44632D6784B3009335A3 /* Drawgress */,
 			);
-			name = ImageDict;
+			name = Drawgress;
 			packageProductDependencies = (
 			);
 			productName = ImageDict;
-			productReference = 823B44612D6784B3009335A3 /* ImageDict.app */;
+			productReference = 823B44612D6784B3009335A3 /* Drawgress.app */;
 			productType = "com.apple.product-type.application";
 		};
-		823B44702D6784B4009335A3 /* ImageDictTests */ = {
+		823B44702D6784B4009335A3 /* DrawgressTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 823B44882D6784B4009335A3 /* Build configuration list for PBXNativeTarget "ImageDictTests" */;
+			buildConfigurationList = 823B44882D6784B4009335A3 /* Build configuration list for PBXNativeTarget "DrawgressTests" */;
 			buildPhases = (
 				823B446D2D6784B4009335A3 /* Sources */,
 				823B446E2D6784B4009335A3 /* Frameworks */,
@@ -131,18 +131,18 @@
 				823B44732D6784B4009335A3 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				823B44742D6784B4009335A3 /* ImageDictTests */,
+				823B44742D6784B4009335A3 /* DrawgressTests */,
 			);
-			name = ImageDictTests;
+			name = DrawgressTests;
 			packageProductDependencies = (
 			);
 			productName = ImageDictTests;
-			productReference = 823B44712D6784B4009335A3 /* ImageDictTests.xctest */;
+			productReference = 823B44712D6784B4009335A3 /* DrawgressTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		823B447A2D6784B4009335A3 /* ImageDictUITests */ = {
+		823B447A2D6784B4009335A3 /* DrawgressUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 823B448B2D6784B4009335A3 /* Build configuration list for PBXNativeTarget "ImageDictUITests" */;
+			buildConfigurationList = 823B448B2D6784B4009335A3 /* Build configuration list for PBXNativeTarget "DrawgressUITests" */;
 			buildPhases = (
 				823B44772D6784B4009335A3 /* Sources */,
 				823B44782D6784B4009335A3 /* Frameworks */,
@@ -154,13 +154,13 @@
 				823B447D2D6784B4009335A3 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				823B447E2D6784B4009335A3 /* ImageDictUITests */,
+				823B447E2D6784B4009335A3 /* DrawgresstUITests */,
 			);
-			name = ImageDictUITests;
+			name = DrawgressUITests;
 			packageProductDependencies = (
 			);
 			productName = ImageDictUITests;
-			productReference = 823B447B2D6784B4009335A3 /* ImageDictUITests.xctest */;
+			productReference = 823B447B2D6784B4009335A3 /* DrawgressUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -186,7 +186,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 823B445C2D6784B3009335A3 /* Build configuration list for PBXProject "ImageDict" */;
+			buildConfigurationList = 823B445C2D6784B3009335A3 /* Build configuration list for PBXProject "Drawgress" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -200,9 +200,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				823B44602D6784B3009335A3 /* ImageDict */,
-				823B44702D6784B4009335A3 /* ImageDictTests */,
-				823B447A2D6784B4009335A3 /* ImageDictUITests */,
+				823B44602D6784B3009335A3 /* Drawgress */,
+				823B44702D6784B4009335A3 /* DrawgressTests */,
+				823B447A2D6784B4009335A3 /* DrawgressUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -258,12 +258,12 @@
 /* Begin PBXTargetDependency section */
 		823B44732D6784B4009335A3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 823B44602D6784B3009335A3 /* ImageDict */;
+			target = 823B44602D6784B3009335A3 /* Drawgress */;
 			targetProxy = 823B44722D6784B4009335A3 /* PBXContainerItemProxy */;
 		};
 		823B447D2D6784B4009335A3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 823B44602D6784B3009335A3 /* ImageDict */;
+			target = 823B44602D6784B3009335A3 /* Drawgress */;
 			targetProxy = 823B447C2D6784B4009335A3 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -395,7 +395,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"ImageDict/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Drawgress/Preview Content\"";
 				DEVELOPMENT_TEAM = PWG234D888;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -410,7 +410,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kangiriyanka.ImageDict;
+				PRODUCT_BUNDLE_IDENTIFIER = kangiriyanka.Drawgress;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -425,7 +425,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"ImageDict/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Drawgress/Preview Content\"";
 				DEVELOPMENT_TEAM = PWG234D888;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -440,7 +440,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kangiriyanka.ImageDict;
+				PRODUCT_BUNDLE_IDENTIFIER = kangiriyanka.Drawgress;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -462,7 +462,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ImageDict.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ImageDict";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Drawgress.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Drawgress";
 			};
 			name = Debug;
 		};
@@ -480,7 +480,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ImageDict.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ImageDict";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Drawgress.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Drawgress";
 			};
 			name = Release;
 		};
@@ -519,7 +519,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		823B445C2D6784B3009335A3 /* Build configuration list for PBXProject "ImageDict" */ = {
+		823B445C2D6784B3009335A3 /* Build configuration list for PBXProject "Drawgress" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				823B44832D6784B4009335A3 /* Debug */,
@@ -528,7 +528,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		823B44852D6784B4009335A3 /* Build configuration list for PBXNativeTarget "ImageDict" */ = {
+		823B44852D6784B4009335A3 /* Build configuration list for PBXNativeTarget "Drawgress" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				823B44862D6784B4009335A3 /* Debug */,
@@ -537,7 +537,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		823B44882D6784B4009335A3 /* Build configuration list for PBXNativeTarget "ImageDictTests" */ = {
+		823B44882D6784B4009335A3 /* Build configuration list for PBXNativeTarget "DrawgressTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				823B44892D6784B4009335A3 /* Debug */,
@@ -546,7 +546,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		823B448B2D6784B4009335A3 /* Build configuration list for PBXNativeTarget "ImageDictUITests" */ = {
+		823B448B2D6784B4009335A3 /* Build configuration list for PBXNativeTarget "DrawgressUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				823B448C2D6784B4009335A3 /* Debug */,

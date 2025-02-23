@@ -12,6 +12,7 @@ import PhotosUI
 struct UpdateEditFormView: View {
     
     @Environment(\.dismiss) var dismiss
+    @Environment(SwiftDataViewModel.self) var viewModel
     @State var vm : UpdateEditFormViewModel
     @State private var imagePicker = ImagePicker()
     @State private var showCamera = false
@@ -38,6 +39,12 @@ struct UpdateEditFormView: View {
                         }
                         
                         else {
+                            
+                            let prompt = vm.createPrompt()
+                            viewModel.addPrompt(prompt: prompt)
+                            dismiss()
+                            
+                        
                             
                             
                             
@@ -109,5 +116,10 @@ struct UpdateEditFormView: View {
 }
 
 #Preview {
+    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+        let container = try! ModelContainer(for: DrawingPrompt.self, configurations: config)
+    let datavm = SwiftDataViewModel(modelContext: container.mainContext)
     UpdateEditFormView(vm: UpdateEditFormViewModel())
+        .environment(datavm)
+        
 }

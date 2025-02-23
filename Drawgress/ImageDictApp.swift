@@ -11,21 +11,26 @@ import SwiftData
 @main
 struct ImageDictApp: App {
     
-    // Place your init first
+    
     init() {
         do {
             container = try ModelContainer(for: DrawingPrompt.self)
+            viewModel = SwiftDataViewModel(modelContext: container.mainContext)
+            
         } catch {
             fatalError("Failed to create ModelContainer for DrawingPrompt")
         }
     }
     let container: ModelContainer
+    @State var viewModel: SwiftDataViewModel
     
     var body: some Scene {
         WindowGroup {
-            ContentView(modelContext: container.mainContext)
+            ContentView()
+                .environment(viewModel)
         }
         .modelContainer(container)
+        
         
         
     

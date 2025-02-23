@@ -62,6 +62,11 @@ class UpdateEditFormViewModel {
         prompt.title = title
         prompt.category = category
     }
+    
+    
+    func createPrompt() -> DrawingPrompt {
+        return DrawingPrompt(title: self.title , category: self.category)
+    }
   
     
     var isDisabled: Bool {title.isEmpty || category.isEmpty}

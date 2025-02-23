@@ -23,6 +23,7 @@ struct DrawingPromptView: View {
                     
                         .resizable()
                         .scaledToFit()
+                        .frame(width:500, height: 500)
                         .clipShape(RoundedRectangle(cornerRadius: 12))
                         .padding()
                 }

@@ -8,10 +8,8 @@
 import SwiftUI
 import SwiftData 
 
-extension ContentView {
-    
-    @Observable
-    class ViewModel {
+@Observable
+    class SwiftDataViewModel {
         var modelContext: ModelContext
         var prompts = [DrawingPrompt]()
         
@@ -26,10 +24,16 @@ extension ContentView {
             fetchData()
         }
         
+        func addPrompt(prompt: DrawingPrompt) {
+            modelContext.insert(prompt)
+            fetchData()
+        }
+        
         func deletePrompt(_ prompt: DrawingPrompt) {
                 modelContext.delete(prompt) 
                 do {
                     try modelContext.save()
+                    fetchData()
                 } catch {
                     print("Error saving context after delete: \(error)")
                 }
@@ -51,4 +55,4 @@ extension ContentView {
         
         
     }
-}
+
