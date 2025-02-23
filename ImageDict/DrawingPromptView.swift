@@ -11,9 +11,45 @@ import SwiftData
 struct DrawingPromptView: View {
     
     let prompt: DrawingPrompt
+    @State private var formType: ModelFormType?
     
     var body: some View {
-        Text(prompt.title)
-    }
+        
+      
+            VStack(alignment: .leading){
+                Text(prompt.title).bold().font(.title)
+                Image(uiImage: prompt.getCoverPhoto ?? Constants.placeholder)
+                
+                    .resizable()
+                    .scaledToFit()
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    .padding()
+                
+                Spacer()
+            }
+            
+            
+            .padding()
+            .toolbar {
+                ToolbarItemGroup {
+                    Button("Edit", systemImage: "pencil") {
+                        formType = .update(prompt)
+                    }
+                    .sheet(item: $formType) { $0 }
+                }
+              
+            }
+        }
     
+    }
+
+                           
+#Preview {
+  
+    let prompt = DrawingPrompt(title: "Computer", category: "Things")
+    
+    return DrawingPromptView(prompt: prompt)
+        
+                    
+                
 }

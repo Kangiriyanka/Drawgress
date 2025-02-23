@@ -17,14 +17,25 @@ class DrawingPrompt {
   
     var title: String
     var category: String
-    var images: [Data] = []
+    var images: [DrawingImage] = []
+    var coverPhoto: Data? 
  
-   
+    var getCoverPhoto: UIImage? {
+            if let coverPhoto, let uiImage = UIImage(data: coverPhoto) {
+                return uiImage
+            } else {
+                return Constants.placeholder
+            }
+        }
+    
     
     init(title: String, category: String) {
         self.title = title
         self.category = category
     }
+    
+  
+   
     
     
 }

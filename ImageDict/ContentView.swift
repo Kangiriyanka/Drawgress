@@ -15,6 +15,7 @@ struct ContentView: View {
     
     
     @State private var viewModel: ViewModel
+    @State private var formType: ModelFormType?
     var body: some View {
         
         
@@ -36,10 +37,12 @@ struct ContentView: View {
             .navigationTitle("Drawgress")
             .toolbar {
                 Button {
-                    viewModel.addSample()
+                    formType = .new
                 } label: {
                     Image(systemName: "plus.circle.fill")
                 }
+
+                .sheet(item: $formType) { $0 }
             }
             
         }
@@ -68,16 +71,3 @@ struct ContentView: View {
 
 
 
-
-//        VStack {
-//
-//            Text("Hi")
-//            if let image = photoViewModel.selectedImage {
-//                Image(uiImage: image)
-//                    .resizable()
-//                    .scaledToFill()
-//                    .frame(width: 300, height: 300)
-//            }
-//            PhotosPicker("Select Image", selection: $photoViewModel.selectedItem, matching: .images)
-//
-//        }
