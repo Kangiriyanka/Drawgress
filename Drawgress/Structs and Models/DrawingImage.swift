@@ -11,9 +11,9 @@ import SwiftData
 @Model
 class DrawingImage {
     var imageData: Data
-    var comment: String?
+    var comment: Comment?
     
-    init(imageData: Data, comment: String? = nil) {
+    init(imageData: Data, comment: Comment? = nil) {
         self.imageData = imageData
         self.comment = comment
     }

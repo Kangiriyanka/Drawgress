@@ -10,7 +10,6 @@ import PhotosUI
 import SwiftData
 
 
-
 struct ContentView: View {
     
     
@@ -81,10 +80,20 @@ struct ContentView: View {
     }
     
     
+    
+
 
     
     
     
+}
+
+
+#Preview {
+    let container = DrawingPrompt.previewContainer
+    let mockViewModel = SwiftDataViewModel(modelContext: container.mainContext)
     
-    
+    return ContentView()
+        .modelContainer(container)
+        .environment(mockViewModel)
 }

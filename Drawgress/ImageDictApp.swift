@@ -21,6 +21,7 @@ struct ImageDictApp: App {
             fatalError("Failed to create ModelContainer for DrawingPrompt")
         }
     }
+    
     let container: ModelContainer
     @State var viewModel: SwiftDataViewModel
     

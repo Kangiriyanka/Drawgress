@@ -42,6 +42,7 @@ class UpdateEditFormViewModel {
     func clearImage() {
             coverPhoto = nil
         }
+    
     @MainActor
     func clearImages() {
         images.removeAll()

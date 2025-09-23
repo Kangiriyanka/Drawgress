@@ -12,6 +12,7 @@ struct UIKitCamera: UIViewControllerRepresentable {
     @Binding var selectedImage: UIImage?
     @Environment(\.dismiss) var dismiss
     
+    /// Creates the camera
     func makeUIViewController(context: Context) -> UIImagePickerController {
         let imagePicker = UIImagePickerController()
         imagePicker.allowsEditing = false
@@ -19,6 +20,8 @@ struct UIKitCamera: UIViewControllerRepresentable {
         imagePicker.delegate = context.coordinator
         return imagePicker
     }
+    
+    
     
     func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {
         
