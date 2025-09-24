@@ -18,7 +18,9 @@ class DrawingPrompt {
     var title: String
     var category: String
     var images: [DrawingImage] = []
-    var coverPhoto: Data? 
+    var coverPhoto: Data?
+    
+    
     
     var getCoverPhoto: UIImage? {
         if let coverPhoto, let uiImage = UIImage(data: coverPhoto) {
