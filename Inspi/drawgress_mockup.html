@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drawgress App Mockup</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f2f2f7;
+            padding: 20px;
+        }
+        
+        .phone-container {
+            max-width: 375px;
+            margin: 0 auto;
+            background: #000;
+            border-radius: 40px;
+            padding: 6px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        
+        .screen {
+            background: #fff;
+            border-radius: 35px;
+            overflow: hidden;
+            height: 812px;
+            position: relative;
+        }
+        
+        .status-bar {
+            background: #fff;
+            height: 44px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .nav-bar {
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(10px);
+            height: 96px;
+            padding: 0 20px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        .nav-title {
+            font-size: 34px;
+            font-weight: bold;
+            color: #000;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+        
+        .nav-button {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #007AFF;
+            cursor: pointer;
+        }
+        
+        .content {
+            padding: 20px;
+            height: calc(100% - 140px);
+            overflow-y: auto;
+        }
+        
+        .category-section {
+            background: #f2f2f7;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .category-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        
+        .category-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .category-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+        
+        .category-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #000;
+        }
+        
+        .category-count {
+            background: rgba(0,0,0,0.1);
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #666;
+        }
+        
+        .prompts-scroll {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding: 4px;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .prompts-scroll::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .prompt-card {
+            flex-shrink: 0;
+            width: 120px;
+            background: #fff;
+            border-radius: 8px;
+            padding: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .prompt-image {
+            width: 104px;
+            height: 70px;
+            background: #e5e5ea;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px;
+            font-size: 20px;
+            color: #8E8E93;
+        }
+        
+        .prompt-image.has-image {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+        }
+        
+        .prompt-image.landscape {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .prompt-image.abstract {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        
+        .prompt-title {
+            font-size: 12px;
+            line-height: 1.3;
+            color: #000;
+            font-weight: 500;
+        }
+        
+        .empty-category {
+            color: #8E8E93;
+            font-size: 14px;
+            padding: 12px 0;
+            text-align: center;
+        }
+        
+        .purple { color: #AF52DE; }
+        .green { color: #34C759; }
+        .orange { color: #FF9500; }
+        
+        .toggle-hint {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            animation: fadeIn 2s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-container">
+        <div class="screen">
+            <div class="status-bar">
+                <span>9:41</span>
+                <span>📶 🔋</span>
+            </div>
+            
+            <div class="nav-bar">
+                <div class="nav-title">Drawgress</div>
+                <div class="nav-buttons">
+                    <button class="nav-button">☰</button>
+                    <button class="nav-button">➕</button>
+                </div>
+            </div>
+            
+            <div class="content">
+                <!-- Characters Category -->
+                <div class="category-section">
+                    <div class="category-header">
+                        <div class="category-info">
+                            <div class="category-icon purple">👥</div>
+                            <div class="category-title">Characters</div>
+                        </div>
+                        <div class="category-count">4</div>
+                    </div>
+                    <div class="prompts-scroll">
+                        <div class="prompt-card">
+                            <div class="prompt-image has-image">🧙‍♀️</div>
+                            <div class="prompt-title">Wizard casting spell</div>
+                        </div>
+                        <div class="prompt-card">
+                            <div class="prompt-image has-image">🦸‍♂️</div>
+                            <div class="prompt-title">Superhero in action</div>
+                        </div>
+                        <div class="prompt-card">
+                            <div class="prompt-image has-image">👸</div>
+                            <div class="prompt-title">Medieval princess</div>
+                        </div>
+                        <div class="prompt-card">
+                            <div class="prompt-image has-image">🤖</div>
+                            <div class="prompt-title">Futuristic robot</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Landscapes Category -->
+                <div class="category-section">
+                    <div class="category-header">
+                        <div class="category-info">
+                            <div class="category-icon green">🏔️</div>
+                            <div class="category-title">Landscapes</div>
+                        </div>
+                        <div class="category-count">3</div>
+                    </div>
+                    <div class="prompts-scroll">
+                        <div class="prompt-card">
+                            <div class="prompt-image landscape">🌄</div>
+                            <div class="prompt-title">Mountain sunrise</div>
+                        </div>
+                        <div class="prompt-card">
+                            <div class="prompt-image landscape">🌊</div>
+                            <div class="prompt-title">Ocean waves</div>
+                        </div>
+                        <div class="prompt-card">
+                            <div class="prompt-image landscape">🌲</div>
+                            <div class="prompt-title">Forest clearing</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Abstract Category -->
+                <div class="category-section">
+                    <div class="category-header">
+                        <div class="category-info">
+                            <div class="category-icon orange">🎨</div>
+                            <div class="category-title">Abstract</div>
+                        </div>
+                        <div class="category-count">2</div>
+                    </div>
+                    <div class="prompts-scroll">
+                        <div class="prompt-card">
+                            <div class="prompt-image abstract">◉</div>
+                            <div class="prompt-title">Geometric shapes</div>
+                        </div>
+                        <div class="prompt-card">
+                            <div class="prompt-image abstract">∿</div>
+                            <div class="prompt-title">Flowing lines</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Empty Category -->
+                <div class="category-section">
+                    <div class="category-header">
+                        <div class="category-info">
+                            <div class="category-icon purple">⭐</div>
+                            <div class="category-title">Fantasy</div>
+                        </div>
+                        <div class="category-count">0</div>
+                    </div>
+                    <div class="empty-category">
+                        No prompts in this category
+                    </div>
+                </div>
+            </div>
+            
+            <div class="toggle-hint">
+                Tap ☰ to switch to list view
+            </div>
+        </div>
+    </div>
+</body>
+</html>

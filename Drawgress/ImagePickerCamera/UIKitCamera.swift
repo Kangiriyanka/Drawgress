@@ -1,6 +1,4 @@
 import SwiftUI
-
-
 struct UIKitCamera: UIViewControllerRepresentable {
     @Binding var selectedImage: UIImage?
     @Environment(\.dismiss) var dismiss

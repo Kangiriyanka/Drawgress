@@ -9,10 +9,11 @@ import SwiftUI
 import SwiftData
 import PhotosUI
 
+
 struct UpdateEditFormView: View {
     
     @Environment(\.dismiss) var dismiss
-    @Environment(SwiftDataViewModel.self) var viewModel
+    @Environment(SwiftDataViewModel.self) var dataModel
     @State var vm : UpdateEditFormViewModel
     @State private var imagePicker = ImagePicker()
     @State private var showCamera = false
@@ -20,33 +21,36 @@ struct UpdateEditFormView: View {
     
     var body: some View {
         NavigationStack {
-            Form {
-                TextField("Title", text: $vm.title)
-                TextField("Category", text: $vm.category)
+            
+            ScrollView {
+              
+                VStack {
+                    CustomTextField(title: "Title", text: $vm.title, icon: "textformat")
+                    CustomTextField(title: "Category", text: $vm.category, icon: "folder")
+                }.padding(.horizontal)
+                
                 Image(uiImage: vm.image)
                     .resizable()
                     .scaledToFit()
                     .clipShape(RoundedRectangle(cornerRadius: 12))
                     .padding()
                 
+                // MARK: UIKitCamera or Picker Buttons
+                HStack {
+                    cameraButton()
+                    
+                    PhotosPicker(selection: $imagePicker.selectedItem) {
+                        Label("Photos", systemImage: "photo")
+                    }
+                    .buttonStyle(CameraButtonStyle(color: Color.espressoBrown))
+                    
+                    
+                }
+                
                 HStack {
                     Spacer()
                     Button {
-                        if vm.isUpdating {
-                            vm.updatePrompt()
-                            dismiss()
-                            
-                        }
-                        
-                        else {
-                            
-                            let prompt = vm.createPrompt()
-                            viewModel.addPrompt(prompt: prompt)
-                            dismiss()
-                            
-                        
-                            
-                        }
+                        handleSave()
                         
                     } label: {
                         Text(vm.isUpdating ? "Update" : "Add")
@@ -64,6 +68,8 @@ struct UpdateEditFormView: View {
                     }
                 }
                 
+                
+                
             }
             .onAppear {
                 imagePicker.setup(vm)
@@ -74,33 +80,7 @@ struct UpdateEditFormView: View {
                 }
             }
             .toolbar {
-                ToolbarItemGroup {
-                    Button("Camera", systemImage: "camera") {
-                        if let error = CameraPermission.checkPermissions(){
-                            cameraError = error
-                        }
-                        else {
-                            showCamera.toggle()
-                        }
-                    }
-                    .alert(isPresented: .constant(cameraError != nil), error: cameraError) { _ in
-                                                Button("OK") {
-                                                    cameraError = nil
-                                                }
-                                            } message: { error in
-                                                Text(error.recoverySuggestion ?? "Try again later")
-                                            }
-                                            .sheet(isPresented: $showCamera) {
-                                                UIKitCamera(selectedImage: $vm.cameraImage)
-                                                    .ignoresSafeArea(.all)
-                                                    
-                                            }
-                    
-                    PhotosPicker(selection: $imagePicker.selectedItem) {
-                        Label("Photos", systemImage: "photo")
-                    }
-                    
-                }
+               
                 
                 ToolbarItem(placement: .topBarLeading) {
                     Button("Cancel") {
@@ -111,7 +91,52 @@ struct UpdateEditFormView: View {
         }
         
     }
-}
+    
+    
+    
+    
+    /// Saves the form data by either updating an existing prompt or creating a new one
+    private func handleSave() {
+        if vm.isUpdating {
+            vm.updatePrompt()
+        } else {
+            let prompt = vm.createPrompt()
+            dataModel.addPrompt(prompt: prompt)
+        }
+        dismiss()
+    }
+    
+    /// CameraButton that shows the UIKitCamera
+    ///
+    private func cameraButton() ->  some View {
+
+            Button("Camera", systemImage: "camera") {
+                if let error = CameraPermission.checkPermissions(){
+                    cameraError = error
+                }
+                else {
+                    showCamera.toggle()
+                }
+            }
+            // Display the alert if the cameraError isn't nil
+            .alert(isPresented: .constant(cameraError != nil), error: cameraError) { _ in
+                Button("OK") {
+                    cameraError = nil
+                }
+            } message: { error in
+                Text(error.recoverySuggestion ?? "Try again later")
+            }
+            .sheet(isPresented: $showCamera) {
+                UIKitCamera(selectedImage: $vm.cameraImage)
+                    .ignoresSafeArea(.all)
+                
+            }
+            .buttonStyle(CameraButtonStyle(color: Color.richBrown))
+        
+            
+        }
+    }
+
 
 #Preview {
     let config = ModelConfiguration(isStoredInMemoryOnly: true)

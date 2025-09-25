@@ -11,7 +11,6 @@ import SwiftData
 @main
 struct ImageDictApp: App {
     
-    
     init() {
         do {
             container = try ModelContainer(for: DrawingPrompt.self)

@@ -12,7 +12,6 @@ import SwiftData
 
 struct ContentView: View {
     
-    
     @Environment(SwiftDataViewModel.self) var viewModel
     @State private var formType: ModelFormType?
     var body: some View {
@@ -31,18 +30,7 @@ struct ContentView: View {
                     
                     List(viewModel.prompts) { prompt in
                         NavigationLink(value: prompt) {
-                            HStack {
-                                Image(
-                                    uiImage: prompt.getCoverPhoto ?? Constants.placeholder
-                                )
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width:50, height: 50)
-                                .clipShape(RoundedRectangle(cornerRadius: 12))
-                                .padding(.trailing)
-                                Text(prompt.title)
-                                
-                            }
+                            PromptRow(prompt: prompt)
                         }
                         .swipeActions {
                             Button(role: .destructive) {
@@ -80,11 +68,7 @@ struct ContentView: View {
     }
     
     
-    
-
-
-    
-    
+ 
     
 }
 

@@ -50,7 +50,6 @@ struct DrawingPromptView: View {
 #Preview {
   
     let prompt = DrawingPrompt(title: "Computer", category: "Things")
-    
     return DrawingPromptView(prompt: prompt)
         
                     

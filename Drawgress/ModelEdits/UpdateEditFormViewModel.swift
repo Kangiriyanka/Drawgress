@@ -5,8 +5,6 @@
 //  Created by Kangiriyanka The Single Leaf on 2025/02/22.
 //
 
-
-
 import UIKit
 
 @Observable
@@ -23,7 +21,7 @@ class UpdateEditFormViewModel {
         }
     }
     var cameraImage: UIImage?
-    var prompt:  DrawingPrompt?
+    var prompt: DrawingPrompt?
     
     
     
@@ -49,6 +47,7 @@ class UpdateEditFormViewModel {
         
     }
     
+    /// Change the cover photo
     func updatePrompt() {
         guard let prompt else { return }
         

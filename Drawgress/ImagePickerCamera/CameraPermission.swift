@@ -33,6 +33,7 @@ enum CameraPermission {
         
     }
     
+    /// 
     static func checkPermissions() -> CameraError? {
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
             let authStatus = AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
