@@ -33,7 +33,6 @@ class UpdateEditFormViewModel {
         self.coverPhoto = prompt.coverPhoto
       
      
-        
     }
     
     @MainActor

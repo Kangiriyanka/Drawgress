@@ -18,12 +18,13 @@ struct DrawingPromptView: View {
       
             VStack(alignment: .leading){
                 Text(prompt.title).bold().font(.title)
+         
                 ZoomableScrollView {
                     Image(uiImage: prompt.getCoverPhoto ?? Constants.placeholder)
                     
                         .resizable()
                         .scaledToFit()
-                        .frame(width:500, height: 500)
+                        .frame(width:300, height: 300)
                         .clipShape(RoundedRectangle(cornerRadius: 12))
                         .padding()
                 }

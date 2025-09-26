@@ -11,7 +11,8 @@ import SwiftUI
 
 extension Color {
  
-    static let vanillaCream = Color(red: 0.984, green: 0.973, blue: 0.953)
+    static let bgCream = Color(red: 0.984, green: 0.973, blue: 0.953)
+    
     static let warmIvory = Color(red: 0.969, green: 0.949, blue: 0.910)
     static let softBeige = Color(red: 0.941, green: 0.902, blue: 0.824)
     static let canvasCream = Color(red: 0.961, green: 0.941, blue: 0.910)

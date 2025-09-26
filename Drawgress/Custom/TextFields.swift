@@ -26,13 +26,14 @@ struct CustomTextField: View {
             
             TextField("Enter \(title.lowercased())", text: $text)
                 .textFieldStyle(.plain)
+                .font(.headline)
                 .padding()
-                .background(Color(.systemBackground))
                 .clipShape(RoundedRectangle(cornerRadius: 12))
                 .overlay(
                     RoundedRectangle(cornerRadius: 12)
-                        .stroke(Color(.systemGray4), lineWidth: 1)
+                        .stroke(Color(.gray), lineWidth: 1)
                 )
         }
+        .padding(5)
     }
 }

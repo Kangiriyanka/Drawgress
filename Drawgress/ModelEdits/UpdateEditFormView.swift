@@ -23,54 +23,15 @@ struct UpdateEditFormView: View {
         NavigationStack {
             
             ScrollView {
-              
-                VStack {
-                    CustomTextField(title: "Title", text: $vm.title, icon: "textformat")
-                    CustomTextField(title: "Category", text: $vm.category, icon: "folder")
-                }.padding(.horizontal)
-                
-                Image(uiImage: vm.image)
-                    .resizable()
-                    .scaledToFit()
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
-                    .padding()
-                
-                // MARK: UIKitCamera or Picker Buttons
-                HStack {
-                    cameraButton()
-                    
-                    PhotosPicker(selection: $imagePicker.selectedItem) {
-                        Label("Photos", systemImage: "photo")
-                    }
-                    .buttonStyle(CameraButtonStyle(color: Color.espressoBrown))
-                    
-                    
-                }
-                
-                HStack {
-                    Spacer()
-                    Button {
-                        handleSave()
-                        
-                    } label: {
-                        Text(vm.isUpdating ? "Update" : "Add")
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .disabled(vm.isDisabled)
-                    
-                    if vm.coverPhoto != nil {
-                        Button("Clear Image") {
-                            
-                            vm.clearImage()
-                            
-                        }
-                        .buttonStyle(.borderedProminent)
-                    }
-                }
-                
-                
+                titleField
+                formFields
+                imageField
+                cameraPhotosField
+                actionButton
                 
             }
+      
+            .background(Color.bgCream.gradient)
             .onAppear {
                 imagePicker.setup(vm)
             }
@@ -81,8 +42,7 @@ struct UpdateEditFormView: View {
             }
             .toolbar {
                
-                
-                ToolbarItem(placement: .topBarLeading) {
+                ToolbarItem(placement: .topBarTrailing) {
                     Button("Cancel") {
                         dismiss()
                     }
@@ -96,6 +56,7 @@ struct UpdateEditFormView: View {
     
     
     /// Saves the form data by either updating an existing prompt or creating a new one
+    /// Uses two ViewModels, one to add the prompt to SwiftData and the other to modify the cover image
     private func handleSave() {
         if vm.isUpdating {
             vm.updatePrompt()
@@ -106,9 +67,115 @@ struct UpdateEditFormView: View {
         dismiss()
     }
     
-    /// CameraButton that shows the UIKitCamera
-    ///
-    private func cameraButton() ->  some View {
+    
+    // MARK: - Subviews
+    
+    private var titleField: some View {
+        (vm.isUpdating ? Text("Update Prompt") : Text("Add Prompt"))
+            .font(.title).bold()
+       
+            .padding()
+           
+    }
+    
+    private var formFields: some View {
+            VStack {
+                CustomTextField(title: "Title", text: $vm.title, icon: "textformat")
+                CustomTextField(title: "Category", text: $vm.category, icon: "folder")
+            }
+            .padding(.horizontal)
+    }
+    
+  
+ 
+    private var imageField: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Label("Cover", systemImage: "photo")
+                .font(.headline)
+                .foregroundStyle(.primary)
+                .padding(.horizontal)
+
+            ZStack {
+                RoundedRectangle(cornerRadius: 16)
+                    .fill(Color.bgCream)
+                    
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 16)
+                            .stroke(.gray, lineWidth: 1)
+                    )
+                
+
+                if vm.coverPhoto != nil {
+                    Image(uiImage: vm.image)
+                        .resizable()
+                        .scaledToFill()
+                        .clipShape(RoundedRectangle(cornerRadius: 16))
+                        .overlay(alignment: .topTrailing) {
+                            Button(action: vm.clearImage) {
+                                Image(systemName: "xmark.circle.fill")
+                                    .font(.title2)
+                                    .foregroundStyle(.white)
+                                    .background(Circle().fill(.black.opacity(0.3)))
+                            }
+                            .padding(8)
+                        }
+                } else {
+                    ContentUnavailableView(
+                        "Add a cover",
+                        systemImage: "photo",
+                        description: Text("Tap camera or photos below")
+                    )
+                    
+                }
+            }
+            .padding(.horizontal)
+        }
+        .padding(.vertical)
+    }
+    
+    private var cameraPhotosField: some View {
+        
+        HStack(spacing: 15){
+            cameraButton()
+            PhotosPicker(selection: $imagePicker.selectedItem) {
+                Label("Photos", systemImage: "photo")
+            }
+            .buttonStyle(CameraButtonStyle(color: Color.espressoBrown))
+            
+            
+        }
+    
+        .frame(maxWidth: .infinity)
+        .padding()
+        
+    }
+    
+    private var actionButton: some View {
+        
+     
+            Button {
+                self.handleSave()
+                
+            } label: {
+                HStack(spacing: 5){
+                    Image(systemName: "plus")
+                    Text(vm.isUpdating ? "Update" : "Add")
+                       
+                     
+                }
+                .frame(width: 100)
+                  
+            }
+            .buttonStyle(CameraButtonStyle(color: Color.mahoganyBrown))
+            .disabled(vm.isDisabled)
+        
+               
+            
+
+    }
+    
+    /// CameraButton that shows the UIKitCamera if there's no error.
+    private func cameraButton() -> some View {
 
             Button("Camera", systemImage: "camera") {
                 if let error = CameraPermission.checkPermissions(){
@@ -136,6 +203,7 @@ struct UpdateEditFormView: View {
             
         }
     }
+
 
 
 #Preview {

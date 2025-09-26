@@ -1,9 +1,4 @@
-//
-//  CameraPermission.swift
-//  ImageDict
-//
-//  Created by Kangiriyanka The Single Leaf on 2025/02/22.
-//
+
 
 import UIKit
 import AVFoundation
@@ -33,9 +28,14 @@ enum CameraPermission {
         
     }
     
-    /// 
+    /// Checks if the device supports camera access and whether permission is granted.
+    /// - Returns:
+    ///   - `nil` if the camera is available and either authorized, not yet determined, or restricted.
+    ///   - A `CameraError` (.unauthorized or .unavailable) if access is denied or the device has no camera.
     static func checkPermissions() -> CameraError? {
+        // isSourceTypeAvailable checks if the device has an available camera
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            // This checks if the user has given Drawgress access to the camera.
             let authStatus = AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
             switch authStatus {
             case .notDetermined:
