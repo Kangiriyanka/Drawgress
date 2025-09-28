@@ -41,14 +41,15 @@ struct ContentView: View {
                             }
                         }
                     }
+                
                 }
             }
-            
             
             
             .navigationDestination(for: DrawingPrompt.self) { prompt in
                 DrawingPromptView(prompt: prompt)
             }
+          
             
             .navigationTitle("Drawgress")
             .toolbar {

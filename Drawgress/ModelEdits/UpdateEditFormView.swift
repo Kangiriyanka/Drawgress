@@ -119,6 +119,7 @@ struct UpdateEditFormView: View {
                             }
                             .padding(8)
                         }
+                        
                 } else {
                     ContentUnavailableView(
                         "Add a cover",
