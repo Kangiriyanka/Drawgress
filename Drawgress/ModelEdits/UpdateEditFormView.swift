@@ -28,14 +28,14 @@ struct UpdateEditFormView: View {
                 imageField
                 cameraPhotosField
                 actionButton
-                
             }
-      
+            
             .background(Color.bgCream.gradient)
             .onAppear {
                 imagePicker.setup(vm)
             }
             .onChange(of: vm.cameraImage) {
+                // Camera -> cameraImage gets filled -> back to coverPhoto 
                 if let image = vm.cameraImage {
                     vm.coverPhoto = image.jpegData(compressionQuality: 0.8)
                 }
@@ -52,9 +52,7 @@ struct UpdateEditFormView: View {
         
     }
     
-    
-    
-    
+
     /// Saves the form data by either updating an existing prompt or creating a new one
     /// Uses two ViewModels, one to add the prompt to SwiftData and the other to modify the cover image
     private func handleSave() {
@@ -66,17 +64,15 @@ struct UpdateEditFormView: View {
         }
         dismiss()
     }
-    
-    
     // MARK: - Subviews
-    
     private var titleField: some View {
         (vm.isUpdating ? Text("Update Prompt") : Text("Add Prompt"))
             .font(.title).bold()
-       
             .padding()
            
     }
+    
+    
     
     private var formFields: some View {
             VStack {

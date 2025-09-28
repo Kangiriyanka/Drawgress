@@ -12,6 +12,7 @@ class UpdateEditFormViewModel {
     var title: String = ""
     var category: String = ""
     var images: [DrawingImage] = []
+    /// Every UIImage is redirected here.
     var coverPhoto: Data?
     var image: UIImage {
         if let coverPhoto, let uiImage = UIImage(data: coverPhoto) {
@@ -20,6 +21,9 @@ class UpdateEditFormViewModel {
             return Constants.placeholder
         }
     }
+    
+    /// Bind the cameraImage to the UIKitCamera class.
+    /// Once a picture is taken, UIKitCamera will fill  cameraImage the UIImage, and the UpdateEditFormView has an onChange  that will change the coverPhoto data.
     var cameraImage: UIImage?
     var prompt: DrawingPrompt?
     
@@ -35,12 +39,11 @@ class UpdateEditFormViewModel {
      
     }
     
-    @MainActor
+   
     func clearImage() {
             coverPhoto = nil
         }
-    
-    @MainActor
+
     func clearImages() {
         images.removeAll()
         
@@ -56,8 +59,6 @@ class UpdateEditFormViewModel {
                 coverPhoto = nil
             }
             
-
-      
         prompt.title = title
         prompt.category = category
     }
