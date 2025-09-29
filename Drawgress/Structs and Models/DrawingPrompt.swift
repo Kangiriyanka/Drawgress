@@ -16,7 +16,7 @@ class DrawingPrompt {
     
     
     var title: String
-    var category: String
+    var category: DrawingCategory?
     var images: [DrawingImage] = []
     var coverPhoto: Data?
     
@@ -32,7 +32,7 @@ class DrawingPrompt {
 
     
     
-    init(title: String, category: String) {
+    init(title: String, category: DrawingCategory) {
         self.title = title
         self.category = category
     }
@@ -48,21 +48,14 @@ extension DrawingPrompt {
     static var previewContainer: ModelContainer {
         let configuration = ModelConfiguration(isStoredInMemoryOnly: true)
         let container = try! ModelContainer(for: DrawingPrompt.self, configurations: configuration)
+        
+        
 
-        // Insert samples directly
+     
         let samples: [DrawingPrompt] = [
-            .init(title: "mouse", category: "animals"),
-            .init(title: "food", category: "food"),
-            .init(title: "cube", category: "shapes"),
-            .init(title: "guitar", category: "objects"),
-            .init(title: "tree", category: "nature"),
-            .init(title: "car", category: "vehicles"),
-            .init(title: "house", category: "buildings"),
-            .init(title: "flower", category: "plants"),
-            .init(title: "star", category: "symbols"),
-            .init(title: "robot", category: "fantasy"),
-            .init(title: "dog", category: "animals"),
-            .init(title: "cat", category: "animals")
+            DrawingPrompt(title: "mouse", category: DrawingCategory.animals),
+            DrawingPrompt(title: "cube", category: DrawingCategory.shapes)
+      
         ]
         samples.forEach { container.mainContext.insert($0) }
 

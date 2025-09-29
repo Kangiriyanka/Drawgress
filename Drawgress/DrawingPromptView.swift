@@ -50,8 +50,9 @@ struct DrawingPromptView: View {
                            
 #Preview {
   
-    let prompt = DrawingPrompt(title: "Computer", category: "Things")
-    return DrawingPromptView(prompt: prompt)
+    let category = DrawingCategory(name: "Things", colorHex: "FFFFFF")
+    let prompt = DrawingPrompt(title: "Computer", category: category)
+    DrawingPromptView(prompt: prompt)
         
                     
                 

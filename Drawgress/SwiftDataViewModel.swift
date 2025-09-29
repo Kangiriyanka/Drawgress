@@ -10,37 +10,43 @@ import SwiftData
 
 @Observable
     class SwiftDataViewModel {
+        
         var modelContext: ModelContext
         var prompts = [DrawingPrompt]()
+        var categories = [DrawingCategory]()
         
         init(modelContext: ModelContext) {
             self.modelContext = modelContext
-            fetchData()
+            fetchPromptData()
+            fetchCategories()
         }
         
         func addSample() {
-            let prompt = DrawingPrompt(title: "Apple", category: "fruit")
+            let category = DrawingCategory(name: "fruits", colorHex: "#FFC107")
+            let prompt = DrawingPrompt(title: "Apple", category: category)
             modelContext.insert(prompt)
-            fetchData()
+            fetchPromptData()
         }
         
         func addPrompt(prompt: DrawingPrompt) {
             modelContext.insert(prompt)
-            fetchData()
+            fetchPromptData()
+            fetchCategories()
         }
+       
         
         func deletePrompt(_ prompt: DrawingPrompt) {
                 modelContext.delete(prompt) 
                 do {
                     try modelContext.save()
-                    fetchData()
+                    fetchPromptData()
                 } catch {
                     print("Error saving context after delete: \(error)")
                 }
             }
         
         
-        func fetchData() {
+        func fetchPromptData() {
             do {
                 let descriptor = FetchDescriptor<DrawingPrompt>(sortBy: [SortDescriptor(\.title)])
                 prompts = try modelContext.fetch(descriptor)
@@ -48,6 +54,19 @@ import SwiftData
                 print("Fetch failed")
             }
         }
+        
+        func fetchCategories() {
+               do {
+                   let descriptor = FetchDescriptor<DrawingCategory>(sortBy: [SortDescriptor(\.name)])
+                   categories = try modelContext.fetch(descriptor)
+                   print(categories)
+               } catch {
+                   print("Categories fetch failed")
+               }
+           }
+        
+        
+        
         
         
         

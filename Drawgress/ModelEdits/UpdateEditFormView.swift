@@ -17,6 +17,11 @@ struct UpdateEditFormView: View {
     @State var vm : UpdateEditFormViewModel
     @State private var imagePicker = ImagePicker()
     @State private var showCamera = false
+    @State private var isNewCategory = false
+    @State private var selectedCategory: DrawingCategory?
+    
+    
+
     @State private var cameraError: CameraPermission.CameraError?
     
     var body: some View {
@@ -24,7 +29,8 @@ struct UpdateEditFormView: View {
             
             ScrollView {
                 titleField
-                formFields
+                promptField
+                categoryField
                 imageField
                 cameraPhotosField
                 actionButton
@@ -35,7 +41,7 @@ struct UpdateEditFormView: View {
                 imagePicker.setup(vm)
             }
             .onChange(of: vm.cameraImage) {
-                // Camera -> cameraImage gets filled -> back to coverPhoto 
+                // Camera -> cameraImage gets filled -> back to coverPhoto
                 if let image = vm.cameraImage {
                     vm.coverPhoto = image.jpegData(compressionQuality: 0.8)
                 }
@@ -60,13 +66,18 @@ struct UpdateEditFormView: View {
             vm.updatePrompt()
         } else {
             let prompt = vm.createPrompt()
+            let category = vm.createCategory()
+            
             dataModel.addPrompt(prompt: prompt)
+//            if isNewCategory {
+//                dataModel.addCategory(category: category)
+//            }
         }
         dismiss()
     }
     // MARK: - Subviews
     private var titleField: some View {
-        (vm.isUpdating ? Text("Update Prompt") : Text("Add Prompt"))
+        (vm.isUpdating ? Text("Update \(vm.title)") : Text("Add Prompt"))
             .font(.title).bold()
             .padding()
            
@@ -74,12 +85,55 @@ struct UpdateEditFormView: View {
     
     
     
-    private var formFields: some View {
+    private var promptField: some View {
             VStack {
                 CustomTextField(title: "Title", text: $vm.title, icon: "textformat")
-                CustomTextField(title: "Category", text: $vm.category, icon: "folder")
+           
             }
             .padding(.horizontal)
+    }
+    
+    @ViewBuilder
+    private var categoryField: some View {
+        
+    
+          
+                ScrollView {
+                    ForEach(dataModel.categories) { category in
+                        
+                        Button(category.name) {
+                            selectedCategory = category
+                        }
+                        .onChange(of: selectedCategory) {
+                            vm.updateCategory(category: selectedCategory!)
+                        }
+                    
+                
+                       
+                        
+                }
+                .border(.red)
+                Spacer()
+                
+                CategoryBubble(isNewCategory: $isNewCategory)
+              
+            }
+           
+        
+        
+  
+        
+        
+        if isNewCategory {
+            HStack(alignment: .center) {
+                CustomTextField(title: "Category", text: $vm.categoryName, icon: "folder")
+                    .padding()
+                ColorPicker("", selection: $vm.categoryColor)
+                    .frame(width: 50)
+            }
+        }
+        
+        
     }
     
   

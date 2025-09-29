@@ -25,6 +25,22 @@ extension Color {
     static let forestBrown = Color(red: 0.471, green: 0.384, blue: 0.275)    // Photos button - earthy
     static let mahoganyBrown = Color(red: 0.580, green: 0.365, blue: 0.275)  // Photos button - reddish
     static let espressoBrown = Color(red: 0.420, green: 0.345, blue: 0.290)  // Photos button - deeper
+    
+    func toHex() -> String? {
+            guard let components = UIColor(self).cgColor.components else { return nil }
+            
+            let r = components[0]
+            let g = components[1]
+            let b = components[2]
+            
+            return String(format: "#%02X%02X%02X",
+                         Int(r * 255),
+                         Int(g * 255),
+                         Int(b * 255))
+        }
+    
+    
+    
   
 }
 

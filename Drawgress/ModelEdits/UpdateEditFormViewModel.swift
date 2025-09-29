@@ -6,11 +6,19 @@
 //
 
 import UIKit
+import SwiftData
+import SwiftUICore
 
 @Observable
 class UpdateEditFormViewModel {
     var title: String = ""
-    var category: String = ""
+    var category: DrawingCategory?
+    var categoryName: String = ""
+    var categoryColor: Color = Color.blue
+    
+    
+    
+    
     var images: [DrawingImage] = []
     /// Every UIImage is redirected here.
     var coverPhoto: Data?
@@ -36,16 +44,24 @@ class UpdateEditFormViewModel {
         self.title = prompt.title
         self.coverPhoto = prompt.coverPhoto
       
-     
     }
     
-   
+    /// When the user presses X after uploading
     func clearImage() {
             coverPhoto = nil
         }
 
     func clearImages() {
         images.removeAll()
+        
+    }
+    
+    
+    func updateCategory(category: DrawingCategory) {
+        
+        self.category = category
+        
+        
         
     }
     
@@ -61,17 +77,30 @@ class UpdateEditFormViewModel {
             
         prompt.title = title
         prompt.category = category
+      
+    }
+    
+    func createCategory() -> DrawingCategory {
+        
+        let color = categoryColor.toHex() ?? ""
+        return DrawingCategory(name: categoryName , colorHex: color)
+        
     }
     
     
+    /// Creating a prompt must consider two cases: Adding a prompt to a category that already exists or creating a new category
     func createPrompt() -> DrawingPrompt {
-        return DrawingPrompt(title: self.title , category: self.category)
+        
+       
+        let category = createCategory()
+        let prompt = DrawingPrompt(title: self.title , category: category)
+        category.prompts.append(prompt)
+        return prompt
     }
   
     
-    var isDisabled: Bool {title.isEmpty || category.isEmpty}
+    var isDisabled: Bool {title.isEmpty}
     var isUpdating: Bool { prompt != nil}
-    
     
 }
 

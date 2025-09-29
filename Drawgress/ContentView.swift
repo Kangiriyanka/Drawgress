@@ -23,7 +23,7 @@ struct ContentView: View {
                     ContentUnavailableView {
                         Label("No Drawing Prompts", systemImage: "paintpalette")
                     } description: {
-                        Text("New drawing prompts will appear here.")
+                        Text("New categories will appear here.")
                     }
                 }
                 else {
@@ -44,6 +44,8 @@ struct ContentView: View {
                 
                 }
             }
+            
+            TestView()
             
             
             .navigationDestination(for: DrawingPrompt.self) { prompt in

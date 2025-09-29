@@ -13,6 +13,8 @@ class DrawingImage {
     var imageData: Data
     var comment: Comment?
     
+    
+    
     init(imageData: Data, comment: Comment? = nil) {
         self.imageData = imageData
         self.comment = comment
