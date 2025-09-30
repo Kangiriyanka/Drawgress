@@ -12,14 +12,14 @@ import SwiftData
 
 struct ContentView: View {
     
-    @Environment(SwiftDataViewModel.self) var viewModel
+    @Environment(SwiftDataViewModel.self) var dataModel
     @State private var formType: ModelFormType?
     var body: some View {
         
         
         NavigationStack {
             Group {
-                if viewModel.prompts.isEmpty {
+                if dataModel.prompts.isEmpty {
                     ContentUnavailableView {
                         Label("No Drawing Prompts", systemImage: "paintpalette")
                     } description: {
@@ -28,24 +28,37 @@ struct ContentView: View {
                 }
                 else {
                     
-                    List(viewModel.prompts) { prompt in
-                        NavigationLink(value: prompt) {
-                            PromptRow(prompt: prompt)
-                        }
-                        .swipeActions {
-                            Button(role: .destructive) {
-                                viewModel.deletePrompt(prompt)
+                    ScrollView(.vertical) {
+                        VStack(alignment: .leading, spacing: 20) {
+                            ForEach(dataModel.categories) { category in
+                                VStack(alignment: .leading, spacing: 10) {
+                                    Text(category.name)
+                                        .font(.title2)
+                                        .bold()
+                                        .padding(.horizontal)
+                                    
+                                    ForEach(category.prompts) { prompt in
+                                        NavigationLink(value: prompt) {
+                                            PromptRow(prompt: prompt)
+                                        }
+                                        .padding(.horizontal)
+                                    }
+                                }
                                 
-                            } label: {
-                                Image(systemName: "trash")
+                                .background(Color(hex: category.colorHex!).gradient)
+                              
+                            
                             }
+                            
                         }
+                    
+                        .padding(.vertical)
                     }
                 
                 }
             }
             
-            TestView()
+     
             
             
             .navigationDestination(for: DrawingPrompt.self) { prompt in

@@ -10,16 +10,32 @@ import Foundation
 import SwiftUI
 struct CategoryBubble: View {
     
-    @Binding var isNewCategory: Bool
+    let category: DrawingCategory
+    @Binding var selectedCategory: DrawingCategory?
     
     var body: some View {
         
-        Button("New", systemImage: "plus.circle") {
+    
+        Button(action: {
             withAnimation {
-                isNewCategory.toggle()
+                selectedCategory = category
             }
+        }) {
+            Text(category.name)
+                 
+               
+                .foregroundStyle(category == selectedCategory ? Color(hex: category.colorHex!) : Color.black)
+                .padding()
+                .background(
+                    Capsule()
+                        .stroke(category == selectedCategory ? Color(hex: category.colorHex!) : Color.gray, lineWidth: 2 )
+                )
+            
+              
         }
-        .padding()
+        
+        .buttonStyle(.plain)
+
         
         
     }

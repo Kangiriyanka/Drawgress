@@ -93,46 +93,54 @@ struct UpdateEditFormView: View {
             .padding(.horizontal)
     }
     
-    @ViewBuilder
+
     private var categoryField: some View {
-        
-    
-          
-                ScrollView {
+        VStack(alignment: .leading){
+            HStack {
+                Image(systemName: "folder")
+                    .foregroundStyle(.secondary)
+                    .frame(width: 20)
+                Text("Category")
+                    .font(.headline)
+                    .foregroundStyle(.primary)
+            }
+            
+            ScrollView {
+                LazyVGrid(
+                    columns: Array(repeating: GridItem(.flexible(), spacing: 10), count: 3),
+                    
+                ) {
                     ForEach(dataModel.categories) { category in
                         
-                        Button(category.name) {
-                            selectedCategory = category
-                        }
-                        .onChange(of: selectedCategory) {
-                            vm.updateCategory(category: selectedCategory!)
-                        }
-                    
-                
-                       
                         
+                        CategoryBubble(category: category, selectedCategory: $selectedCategory)
+                    }
+                    
                 }
-                .border(.red)
-                Spacer()
-                
-                CategoryBubble(isNewCategory: $isNewCategory)
-              
             }
-           
-        
-        
-  
-        
-        
-        if isNewCategory {
-            HStack(alignment: .center) {
-                CustomTextField(title: "Category", text: $vm.categoryName, icon: "folder")
-                    .padding()
-                ColorPicker("", selection: $vm.categoryColor)
-                    .frame(width: 50)
+            .onChange(of: selectedCategory) {
+                vm.updateCategory(category: selectedCategory!)
+            }
+            .frame(height: 150)
+            
+            
+            
+            Spacer()
+            
+            
+            
+            
+            if isNewCategory {
+                HStack(alignment: .center) {
+                    CustomTextField(title: "Category", text: $vm.categoryName, icon: "folder")
+                        .padding()
+                    ColorPicker("", selection: $vm.categoryColor)
+                        .frame(width: 50)
+                }
             }
         }
-        
+            
+            
         
     }
     
@@ -259,7 +267,7 @@ struct UpdateEditFormView: View {
 
 #Preview {
     let config = ModelConfiguration(isStoredInMemoryOnly: true)
-        let container = try! ModelContainer(for: DrawingPrompt.self, configurations: config)
+    let container = try! ModelContainer(for: DrawingPrompt.self, configurations: config)
     let datavm = SwiftDataViewModel(modelContext: container.mainContext)
     UpdateEditFormView(vm: UpdateEditFormViewModel())
         .environment(datavm)
