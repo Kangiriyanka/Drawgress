@@ -29,22 +29,26 @@ struct ContentView: View {
                 else {
                     
                     ScrollView(.vertical) {
-                        VStack(alignment: .leading, spacing: 20) {
+                        LazyVGrid(
+                            columns: Array(repeating: GridItem(.flexible(), spacing: 15), count: 2),
+                            
+                        )  {
                             ForEach(dataModel.categories) { category in
                                 VStack(alignment: .leading, spacing: 10) {
-                                    Text(category.name)
-                                        .font(.title2)
-                                        .bold()
-                                        .padding(.horizontal)
-                                    
+                                  
                                     ForEach(category.prompts) { prompt in
                                         NavigationLink(value: prompt) {
                                             PromptRow(prompt: prompt)
                                         }
                                         .padding(.horizontal)
                                     }
+                                    
+                                    Text(category.name)
+                                        .font(.title2)
+                                        .bold()
+                                        .padding(.horizontal)
                                 }
-                                
+                                .frame(width: 200, height: 100)
                                 .background(Color(hex: category.colorHex!).gradient)
                               
                             
@@ -52,7 +56,7 @@ struct ContentView: View {
                             
                         }
                     
-                        .padding(.vertical)
+                        .padding()
                     }
                 
                 }

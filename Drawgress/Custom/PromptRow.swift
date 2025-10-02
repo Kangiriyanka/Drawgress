@@ -18,7 +18,7 @@ struct PromptRow: View {
             )
             .resizable()
             .scaledToFill()
-            .frame(width:50, height: 50)
+            .frame(width:20, height: 20)
             .clipShape(RoundedRectangle(cornerRadius: 12))
             .padding(.trailing)
             Text(prompt.title)
