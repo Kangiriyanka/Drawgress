@@ -31,46 +31,32 @@ struct ContentView: View {
                     ScrollView(.vertical) {
                         LazyVGrid(
                             columns: Array(repeating: GridItem(.flexible(), spacing: 15), count: 2),
-                            
-                        )  {
+                            spacing: 15
+                        ) {
                             ForEach(dataModel.categories) { category in
-                                VStack(alignment: .leading, spacing: 10) {
-                                  
-                                    ForEach(category.prompts) { prompt in
-                                        NavigationLink(value: prompt) {
-                                            PromptRow(prompt: prompt)
-                                        }
-                                        .padding(.horizontal)
+                                NavigationLink(value: category) {
+                                    VStack {
+                                        Text(category.name)
+                                            .font(.title2)
+                                            .bold()
                                     }
-                                    
-                                    Text(category.name)
-                                        .font(.title2)
-                                        .bold()
-                                        .padding(.horizontal)
+                                    .frame(width: 200, height: 100)
+                                    .background(Color(hex: category.colorHex ?? "FFFFFF").gradient)
+                                    .cornerRadius(12)
                                 }
-                                .frame(width: 200, height: 100)
-                                .background(Color(hex: category.colorHex!).gradient)
-                              
-                            
                             }
-                            
                         }
-                    
                         .padding()
                     }
                 
                 }
             }
             
-     
-            
-            
-            .navigationDestination(for: DrawingPrompt.self) { prompt in
-                DrawingPromptView(prompt: prompt)
-            }
-          
-            
+
             .navigationTitle("Drawgress")
+            .navigationDestination(for: DrawingCategory.self) { category in
+                PromptsView(prompts: category.prompts)
+            }
             .toolbar {
                 Button {
                     formType = .new
