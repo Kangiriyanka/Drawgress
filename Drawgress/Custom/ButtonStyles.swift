@@ -15,7 +15,7 @@ struct CameraButtonStyle: ButtonStyle {
         configuration.label
             .padding()
             .background(
-                // Option 1: Subtle Accent Color Gradient
+     
                 LinearGradient(
                     colors: [
                         color,

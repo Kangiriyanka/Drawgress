@@ -22,10 +22,13 @@ extension Color {
     static let mediumBrown = Color(red: 0.647, green: 0.576, blue: 0.482)
     static let richBrown = Color(red: 0.545, green: 0.400, blue: 0.290)
     
-    static let forestBrown = Color(red: 0.471, green: 0.384, blue: 0.275)    // Photos button - earthy
-    static let mahoganyBrown = Color(red: 0.580, green: 0.365, blue: 0.275)  // Photos button - reddish
-    static let espressoBrown = Color(red: 0.420, green: 0.345, blue: 0.290)  // Photos button - deeper
+    static let forestBrown = Color(red: 0.471, green: 0.384, blue: 0.275)
+    static let mahoganyBrown = Color(red: 0.580, green: 0.365, blue: 0.275)
+    static let espressoBrown = Color(red: 0.420, green: 0.345, blue: 0.290)
     
+    
+    /// Transform a SwiftUI Color to an UIColor and extract the components
+    /// % start of specification, 0: pad with zeros 2: width, X: uppercase hexcadecimal
     func toHex() -> String? {
             guard let components = UIColor(self).cgColor.components else { return nil }
             
@@ -41,9 +44,15 @@ extension Color {
     
     
     
+    
+    /// 1. Trim all non-alphanumeric characters
+    /// 2. Scanner decodes the hex digits from the string and stores them in the int variable. &int is a reference to the variable.
     init(hex: String) {
+            
+     
             let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
             var int: UInt64 = 0
+           
             Scanner(string: hex).scanHexInt64(&int)
             let a, r, g, b: UInt64
             switch hex.count {

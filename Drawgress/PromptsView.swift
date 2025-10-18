@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PromptsView: View {
     
-    @Binding var prompts: [DrawingPrompt]
+    var prompts: [DrawingPrompt]
     var body: some View {
         List(prompts) { prompt in
             Text(prompt.title)

@@ -40,6 +40,7 @@ struct ContentView: View {
                                             .font(.title2)
                                             .bold()
                                     }
+                                    
                                     .frame(width: 200, height: 100)
                                     .background(Color(hex: category.colorHex ?? "FFFFFF").gradient)
                                     .cornerRadius(12)
