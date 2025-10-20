@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D DP Visualization - Stock Trading</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .prices {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 30px;
+            border-left: 5px solid #3498db;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .day-slider {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="range"] {
+            width: 200px;
+            height: 8px;
+            border-radius: 5px;
+            background: #ddd;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #3498db;
+            cursor: pointer;
+        }
+
+        .visualization {
+            display: flex;
+            justify-content: space-around;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .transaction-layer {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            min-width: 280px;
+            transition: transform 0.3s ease;
+        }
+
+        .transaction-layer:hover {
+            transform: translateY(-5px);
+        }
+
+        .layer-title {
+            text-align: center;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .t0 { background: linear-gradient(45deg, #ff6b6b, #ee5a24); }
+        .t1 { background: linear-gradient(45deg, #4ecdc4, #44bd87); }
+        .t2 { background: linear-gradient(45deg, #a55eea, #8e44ad); }
+
+        .dp-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .dp-table th {
+            background: #34495e;
+            color: white;
+            padding: 12px 8px;
+            font-size: 0.9em;
+        }
+
+        .dp-table td {
+            padding: 12px 8px;
+            text-align: center;
+            border: 1px solid #ecf0f1;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .current-day {
+            background: #fff3cd !important;
+            border: 2px solid #ffc107 !important;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .not-holding {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .holding-positive {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .holding-negative {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .explanation {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            border-left: 5px solid #17a2b8;
+        }
+
+        .state-explanation {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .state-box {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .answer-box {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>3D DP Array Visualization</h1>
+        <p class="subtitle">Best Time to Buy and Sell Stock III - At Most 2 Transactions</p>
+        
+        <div class="prices">
+            <strong>Stock Prices:</strong> [3, 3, 5, 0, 0, 3, 1, 4]
+            <br>
+            <strong>Array Structure:</strong> dp[day][transactions_completed][holding_stock]
+        </div>
+
+        <div class="controls">
+            <div class="day-slider">
+                <label><strong>Current Day:</strong></label>
+                <input type="range" id="daySlider" min="0" max="7" value="0">
+                <span id="dayValue">0</span>
+                <span>Price: $<span id="currentPrice">3</span></span>
+            </div>
+        </div>
+
+        <div class="visualization">
+            <div class="transaction-layer">
+                <div class="layer-title t0">Transaction 0 Complete</div>
+                <table class="dp-table">
+                    <thead>
+                        <tr>
+                            <th>Day</th>
+                            <th>Not Holding</th>
+                            <th>Holding</th>
+                        </tr>
+                    </thead>
+                    <tbody id="t0-body">
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="transaction-layer">
+                <div class="layer-title t1">Transaction 1 Complete</div>
+                <table class="dp-table">
+                    <thead>
+                        <tr>
+                            <th>Day</th>
+                            <th>Not Holding</th>
+                            <th>Holding</th>
+                        </tr>
+                    </thead>
+                    <tbody id="t1-body">
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="transaction-layer">
+                <div class="layer-title t2">Transaction 2 Complete</div>
+                <table class="dp-table">
+                    <thead>
+                        <tr>
+                            <th>Day</th>
+                            <th>Not Holding</th>
+                            <th>Holding</th>
+                        </tr>
+                    </thead>
+                    <tbody id="t2-body">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="explanation">
+            <h3>Understanding the States</h3>
+            <div class="state-explanation">
+                <div class="state-box">
+                    <h4>Not Holding (Column 1)</h4>
+                    <p>Maximum profit when we don't own stock at end of this day</p>
+                    <p><strong>Transitions:</strong></p>
+                    <ul>
+                        <li>Stay not holding</li>
+                        <li>Sell stock (completes transaction)</li>
+                    </ul>
+                </div>
+                <div class="state-box">
+                    <h4>Holding (Column 2)</h4>
+                    <p>Maximum profit when we own stock at end of this day</p>
+                    <p><strong>Transitions:</strong></p>
+                    <ul>
+                        <li>Keep holding</li>
+                        <li>Buy stock (starts transaction)</li>
+                    </ul>
+                </div>
+                <div class="state-box">
+                    <h4>Transaction Layers</h4>
+                    <p><strong>T=0:</strong> No transactions completed</p>
+                    <p><strong>T=1:</strong> One buy-sell completed</p>
+                    <p><strong>T=2:</strong> Two buy-sells completed</p>
+                </div>
+            </div>
+            
+            <div class="answer-box">
+                <strong>Final Answer:</strong> Maximum of dp[7][t][0] for all t = <span id="finalAnswer">6</span>
+                <br>
+                <small>Look at last day, any number of transactions, not holding stock</small>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const prices = [3, 3, 5, 0, 0, 3, 1, 4];
+        const n = prices.length;
+        
+        // Calculate DP table
+        function calculateDP() {
+            const dp = Array(n).fill().map(() => 
+                Array(3).fill().map(() => Array(2).fill(0))
+            );
+            
+            // Base case - day 0
+            for (let t = 0; t < 3; t++) {
+                dp[0][t][0] = 0;          // Not holding
+                dp[0][t][1] = -prices[0]; // Holding (bought at price 0)
+            }
+            
+            // Fill DP table
+            for (let i = 1; i < n; i++) {
+                for (let t = 0; t < 3; t++) {
+                    // Not holding
+                    dp[i][t][0] = dp[i-1][t][0]; // Stay not holding
+                    if (t > 0) {
+                        dp[i][t][0] = Math.max(dp[i][t][0], dp[i-1][t-1][1] + prices[i]); // Sell
+                    }
+                    
+                    // Holding  
+                    dp[i][t][1] = Math.max(
+                        dp[i-1][t][1],              // Keep holding
+                        dp[i-1][t][0] - prices[i]   // Buy
+                    );
+                }
+            }
+            
+            return dp;
+        }
+
+        const dp = calculateDP();
+        
+        function getCellClass(value, isHolding) {
+            if (!isHolding) return 'not-holding';
+            return value >= 0 ? 'holding-positive' : 'holding-negative';
+        }
+        
+        function updateVisualization(currentDay) {
+            document.getElementById('dayValue').textContent = currentDay;
+            document.getElementById('currentPrice').textContent = prices[currentDay];
+            
+            // Update tables
+            for (let t = 0; t < 3; t++) {
+                const tbody = document.getElementById(`t${t}-body`);
+                tbody.innerHTML = '';
+                
+                for (let day = 0; day <= Math.min(currentDay, n-1); day++) {
+                    const row = tbody.insertRow();
+                    const dayCell = row.insertCell(0);
+                    const notHoldingCell = row.insertCell(1);
+                    const holdingCell = row.insertCell(2);
+                    
+                    dayCell.textContent = day;
+                    notHoldingCell.textContent = dp[day][t][0];
+                    holdingCell.textContent = dp[day][t][1];
+                    
+                    notHoldingCell.className = getCellClass(dp[day][t][0], false);
+                    holdingCell.className = getCellClass(dp[day][t][1], true);
+                    
+                    if (day === currentDay) {
+                        dayCell.className = 'current-day';
+                        notHoldingCell.className += ' current-day';
+                        holdingCell.className += ' current-day';
+                    }
+                }
+            }
+            
+            // Update final answer
+            const maxProfit = Math.max(dp[n-1][0][0], dp[n-1][1][0], dp[n-1][2][0]);
+            document.getElementById('finalAnswer').textContent = maxProfit;
+        }
+        
+        // Event listeners
+        const daySlider = document.getElementById('daySlider');
+        daySlider.addEventListener('input', (e) => {
+            updateVisualization(parseInt(e.target.value));
+        });
+        
+        // Initialize
+        updateVisualization(0);
+    </script>
+</body>
+</html>

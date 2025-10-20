@@ -14,6 +14,8 @@ struct ContentView: View {
     
     @Environment(SwiftDataViewModel.self) var dataModel
     @State private var formType: ModelFormType?
+    
+
     var body: some View {
         
         
@@ -31,29 +33,30 @@ struct ContentView: View {
                     ScrollView(.vertical) {
                         LazyVGrid(
                             columns: Array(repeating: GridItem(.flexible(), spacing: 15), count: 2),
-                            spacing: 15
+                            spacing: 20
                         ) {
                             ForEach(dataModel.categories) { category in
                                 NavigationLink(value: category) {
                                     VStack {
                                         Text(category.name)
+                                            .foregroundStyle(.black)
                                             .font(.title2)
                                             .bold()
                                     }
                                     
-                                    .frame(width: 200, height: 100)
+                                    .frame(width: UIConstants.categoryWidth, height: UIConstants.categoryHeight)
                                     .background(Color(hex: category.colorHex ?? "FFFFFF").gradient)
-                                    .cornerRadius(12)
+                                    .cornerRadius(UIConstants.lgRadius)
                                 }
                             }
                         }
                         .padding()
-                    }
+                    }  
                 
                 }
             }
             
-
+            
             .navigationTitle("Drawgress")
             .navigationDestination(for: DrawingCategory.self) { category in
                 PromptsView(prompts: category.prompts)
@@ -69,6 +72,7 @@ struct ContentView: View {
             }
             
         }
+     
         
         
         

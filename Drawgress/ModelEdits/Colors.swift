@@ -47,6 +47,7 @@ extension Color {
     
     /// 1. Trim all non-alphanumeric characters
     /// 2. Scanner decodes the hex digits from the string and stores them in the int variable. &int is a reference to the variable.
+    /// 3. Hex strings can have 3, 6 or 8 digits.
     init(hex: String) {
             
      
@@ -55,11 +56,24 @@ extension Color {
            
             Scanner(string: hex).scanHexInt64(&int)
             let a, r, g, b: UInt64
+            
+    
             switch hex.count {
+                
+            // 0xF is a mask of 4 bits
+            // Multiplying by 17 doubles the digits by shifting the number by 4 bits and adding the same number
+            // Don't see it as * 17 but as << 4 (*16)  + 1 
             case 3:
                 (a, r, g, b) = (255, (int >> 8) * 17, (int >> 4 & 0xF) * 17, (int & 0xF) * 17)
+                
+            //3B6BD1 -> 3B Red, 6B Green, D1 Green
+            //0xFF is a mask of 8 bits of 1's
             case 6:
                 (a, r, g, b) = (255, int >> 16, int >> 8 & 0xFF, int & 0xFF)
+                
+            //FF3B6BD1 -> FF Alpha, 3B Red, 6B Green, D1 Blue
+            
+            
             case 8:
                 (a, r, g, b) = (int >> 24, int >> 16 & 0xFF, int >> 8 & 0xFF, int & 0xFF)
             default:
