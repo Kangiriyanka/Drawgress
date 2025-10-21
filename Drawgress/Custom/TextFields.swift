@@ -8,21 +8,35 @@
 import Foundation
 import SwiftUI
 
-struct CustomTextField: View {
+
+struct CustomHeader: View {
+    
     let title: String
-    @Binding var text: String
     let icon: String
     
     var body: some View {
+        HStack {
+            Image(systemName: icon)
+                .foregroundStyle(.secondary)
+                .frame(width: 20)
+            Text(title)
+                .font(.headline)
+                .foregroundStyle(.primary)
+        }
+        
+    }
+ 
+    
+    
+}
+struct CustomTextField: View {
+    let title: String
+    @Binding var text: String
+   
+    
+    var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            HStack {
-                Image(systemName: icon)
-                    .foregroundStyle(.secondary)
-                    .frame(width: 20)
-                Text(title)
-                    .font(.headline)
-                    .foregroundStyle(.primary)
-            }
+          
             
             TextField("Enter \(title.lowercased())", text: $text)
                 .textFieldStyle(.plain)

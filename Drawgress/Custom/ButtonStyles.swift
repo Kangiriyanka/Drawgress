@@ -25,10 +25,23 @@ struct CameraButtonStyle: ButtonStyle {
                     endPoint: .bottomTrailing
                 )
             )
+        
             .foregroundColor(.white)
             .bold()
-            .clipShape(Capsule(style: .continuous))
+            .clipShape(Circle())
             .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
             .animation(.easeInOut(duration: 0.1), value: configuration.isPressed)
+    }
+}
+
+
+#Preview {
+    
+    VStack {
+        
+        Button("Hello") {}
+            .buttonStyle(CameraButtonStyle(color: .blue))
+        
+        
     }
 }

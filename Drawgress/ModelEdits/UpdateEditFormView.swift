@@ -31,9 +31,10 @@ struct UpdateEditFormView: View {
                 titleField
                 promptField
                 categoryField
+                
                 imageField
-                cameraPhotosField
-                actionButton
+              
+                saveButton
             }
             
             .background(Color.bgCream.gradient)
@@ -86,8 +87,9 @@ struct UpdateEditFormView: View {
     
     
     private var promptField: some View {
-            VStack {
-                CustomTextField(title: "Title", text: $vm.title, icon: "textformat")
+        VStack(alignment: .leading){
+                CustomHeader(title: "Title", icon: "textformat")
+                CustomTextField(title: "Title", text: $vm.title, )
            
             }
             .padding(.horizontal)
@@ -96,32 +98,38 @@ struct UpdateEditFormView: View {
 
     private var categoryField: some View {
         VStack(alignment: .leading){
-            HStack {
-                Image(systemName: "folder")
-                    .foregroundStyle(.secondary)
-                    .frame(width: 20)
-                Text("Category")
-                    .font(.headline)
-                    .foregroundStyle(.primary)
+          
+            CustomHeader(title: "Category", icon: "square")
+               
+            
+            if dataModel.categories.isEmpty || isNewCategory {
+                CustomTextField(title: "New Category", text: $vm.categoryName)
+                    
             }
             
-            ScrollView {
-                LazyVGrid(
-                    columns: Array(repeating: GridItem(.flexible(), spacing: 10), count: 3),
-                    
-                ) {
-                    ForEach(dataModel.categories) { category in
+            
+            ScrollView(.horizontal) {
+                
+               
+             
+                    if !dataModel.categories.isEmpty {
                         
                         
-                        CategoryBubble(category: category, selectedCategory: $selectedCategory)
+                        ForEach(dataModel.categories) { category in
+                            
+                            
+                            CategoryBubble(category: category, selectedCategory: $selectedCategory)
+                        }
+                        
                     }
                     
+                  
                 }
-            }
+            
             .onChange(of: selectedCategory) {
                 vm.updateCategory(category: selectedCategory!)
             }
-            .frame(height: 150)
+         
             
             
             
@@ -132,13 +140,14 @@ struct UpdateEditFormView: View {
             
             if isNewCategory {
                 HStack(alignment: .center) {
-                    CustomTextField(title: "Category", text: $vm.categoryName, icon: "folder")
+                    CustomTextField(title: "Category", text: $vm.categoryName,)
                         .padding()
                     ColorPicker("", selection: $vm.categoryColor)
                         .frame(width: 50)
                 }
             }
         }
+        .padding()
             
             
         
@@ -148,10 +157,12 @@ struct UpdateEditFormView: View {
  
     private var imageField: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Label("Cover", systemImage: "photo")
-                .font(.headline)
-                .foregroundStyle(.primary)
-                .padding(.horizontal)
+            
+            HStack {
+                CustomHeader(title:"Cover", icon: "photo")
+                
+                cameraPhotosField
+            }
 
             ZStack {
                 RoundedRectangle(cornerRadius: 16)
@@ -182,7 +193,7 @@ struct UpdateEditFormView: View {
                     ContentUnavailableView(
                         "Add a cover",
                         systemImage: "photo",
-                        description: Text("Tap camera or photos below")
+                        description: Text("Tap camera or photos above")
                     )
                     
                 }
@@ -209,7 +220,7 @@ struct UpdateEditFormView: View {
         
     }
     
-    private var actionButton: some View {
+    private var saveButton: some View {
         
      
             Button {
@@ -236,7 +247,7 @@ struct UpdateEditFormView: View {
     /// CameraButton that shows the UIKitCamera if there's no error.
     private func cameraButton() -> some View {
 
-            Button("Camera", systemImage: "camera") {
+            Button("",systemImage: "camera") {
                 if let error = CameraPermission.checkPermissions(){
                     cameraError = error
                 }
