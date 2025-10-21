@@ -37,6 +37,12 @@ class DrawingPrompt {
         self.category = category
     }
     
+    static let samples: [DrawingPrompt] = [
+        DrawingPrompt(title: "mouse", category: DrawingCategory.animals),
+        DrawingPrompt(title: "cube", category: DrawingCategory.shapes)
+  
+    ]
+    
   
    
     

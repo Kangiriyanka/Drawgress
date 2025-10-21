@@ -1,94 +1,40 @@
 //
 //  ContentView.swift
-//  ImageDict
+//  Drawgress
 //
-//  Created by Kangiriyanka The Single Leaf on 2025/02/20.
+//  Created by Kangiriyanka The Single Leaf on 2025/10/20.
 //
 
 import SwiftUI
-import PhotosUI
-import SwiftData
-
 
 struct ContentView: View {
-    
-    @Environment(SwiftDataViewModel.self) var dataModel
-    @State private var formType: ModelFormType?
-    
-
     var body: some View {
         
         
-        NavigationStack {
-            Group {
-                if dataModel.prompts.isEmpty {
-                    ContentUnavailableView {
-                        Label("No Drawing Prompts", systemImage: "paintpalette")
-                    } description: {
-                        Text("New categories will appear here.")
-                    }
-                }
-                else {
-                    
-                    ScrollView(.vertical) {
-                        LazyVGrid(
-                            columns: Array(repeating: GridItem(.flexible(), spacing: 15), count: 2),
-                            spacing: 20
-                        ) {
-                            ForEach(dataModel.categories) { category in
-                                NavigationLink(value: category) {
-                                    VStack {
-                                        Text(category.name)
-                                            .foregroundStyle(.black)
-                                            .font(.title2)
-                                            .bold()
-                                    }
-                                    
-                                    .frame(width: UIConstants.categoryWidth, height: UIConstants.categoryHeight)
-                                    .background(Color(hex: category.colorHex ?? "FFFFFF").gradient)
-                                    .cornerRadius(UIConstants.lgRadius)
-                                }
-                            }
-                        }
-                        .padding()
-                    }  
-                
-                }
-            }
+        TabView {
             
-            
-            .navigationTitle("Drawgress")
-            .navigationDestination(for: DrawingCategory.self) { category in
-                PromptsView(prompts: category.prompts)
-            }
-            .toolbar {
-                Button {
-                    formType = .new
-                } label: {
-                    Image(systemName: "plus.circle.fill")
+            CategoryView()
+                .tabItem {
+                    Label("Categories", systemImage: "paintpalette")
                 }
-                
-                .sheet(item: $formType) { $0 }
-            }
             
+            #if targetEnvironment(simulator)
+            
+            DebugView()
+                .tabItem {
+                    Label("Debug", systemImage: "ladybug")
+                }
+            
+            #endif
         }
-     
-        
-        
         
     }
-    
-    
- 
-    
 }
-
 
 #Preview {
     let container = DrawingPrompt.previewContainer
     let mockViewModel = SwiftDataViewModel(modelContext: container.mainContext)
-    
-    return ContentView()
+    ContentView()
         .modelContainer(container)
         .environment(mockViewModel)
 }
