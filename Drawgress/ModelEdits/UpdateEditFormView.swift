@@ -30,7 +30,9 @@ struct UpdateEditFormView: View {
             ScrollView {
                 titleField
                 promptField
+                
                 categoryField
+                
                 
                 imageField
               
@@ -99,7 +101,7 @@ struct UpdateEditFormView: View {
     private var categoryField: some View {
         VStack(alignment: .leading){
           
-            CustomHeader(title: "Category", icon: "square")
+            CustomHeader(title: "Category", icon: "menucard")
                
             
             if dataModel.categories.isEmpty || isNewCategory {
@@ -159,7 +161,7 @@ struct UpdateEditFormView: View {
         VStack(alignment: .leading, spacing: 8) {
             
             HStack {
-                CustomHeader(title:"Cover", icon: "photo")
+             
                 
                 cameraPhotosField
             }
@@ -193,7 +195,7 @@ struct UpdateEditFormView: View {
                     ContentUnavailableView(
                         "Add a cover",
                         systemImage: "photo",
-                        description: Text("Tap camera or photos above")
+                        
                     )
                     
                 }
@@ -205,18 +207,17 @@ struct UpdateEditFormView: View {
     
     private var cameraPhotosField: some View {
         
-        HStack(spacing: 15){
+        HStack(spacing: 0){
             cameraButton()
             PhotosPicker(selection: $imagePicker.selectedItem) {
-                Label("Photos", systemImage: "photo")
+                Image(systemName: "photo")
             }
             .buttonStyle(CameraButtonStyle(color: Color.espressoBrown))
             
             
         }
     
-        .frame(maxWidth: .infinity)
-        .padding()
+        
         
     }
     
@@ -228,12 +229,16 @@ struct UpdateEditFormView: View {
                 
             } label: {
                 HStack(spacing: 5){
+                    
+                    Spacer()
+                   
                     Image(systemName: "plus")
-                    Text(vm.isUpdating ? "Update" : "Add")
+                    Spacer()
+                    
                        
                      
                 }
-                .frame(width: 100)
+              
                   
             }
             .buttonStyle(CameraButtonStyle(color: Color.mahoganyBrown))
@@ -247,13 +252,16 @@ struct UpdateEditFormView: View {
     /// CameraButton that shows the UIKitCamera if there's no error.
     private func cameraButton() -> some View {
 
-            Button("",systemImage: "camera") {
+            Button{
                 if let error = CameraPermission.checkPermissions(){
                     cameraError = error
                 }
                 else {
                     showCamera.toggle()
                 }
+                
+            } label: {
+                Image(systemName: "camera")
             }
             // Display the alert if the cameraError isn't nil
             .alert(isPresented: .constant(cameraError != nil), error: cameraError) { _ in

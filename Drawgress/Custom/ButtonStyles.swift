@@ -28,6 +28,7 @@ struct CameraButtonStyle: ButtonStyle {
         
             .foregroundColor(.white)
             .bold()
+            .frame(width: 50, height: 50)
             .clipShape(Circle())
             .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
             .animation(.easeInOut(duration: 0.1), value: configuration.isPressed)
