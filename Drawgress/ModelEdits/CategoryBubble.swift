@@ -22,19 +22,25 @@ struct CategoryBubble: View {
             }
         }) {
             Text(category.name)
-                 
-               
-                .foregroundStyle(category == selectedCategory ? Color(hex: category.colorHex!) : Color.black)
-                .padding()
+                
                 .background(
-                    Capsule()
-                        .stroke(category == selectedCategory ? Color(hex: category.colorHex!) : Color.gray, lineWidth: 2 )
+                    category == selectedCategory ? Color(hex: category.colorHex!) : Color.clear
                 )
+                .padding()
+                .foregroundStyle(category == selectedCategory ? .white : .black)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 20)
+                        .stroke(Color(hex: category.colorHex!), lineWidth: 2)
+                )
+               
+                
+               
+               
             
               
         }
         
-        .buttonStyle(.plain)
+     
 
         
         

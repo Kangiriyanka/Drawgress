@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		82B233BD2EAF1F6F00EEFE6A /* AllCategoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B233BC2EAF1F6F00EEFE6A /* AllCategoriesView.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		823B44722D6784B4009335A3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +31,7 @@
 		823B44612D6784B3009335A3 /* Drawgress.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Drawgress.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		823B44712D6784B4009335A3 /* DrawgressTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DrawgressTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		823B447B2D6784B4009335A3 /* DrawgressUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DrawgressUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		82B233BC2EAF1F6F00EEFE6A /* AllCategoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllCategoriesView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -75,6 +80,7 @@
 		823B44582D6784B3009335A3 = {
 			isa = PBXGroup;
 			children = (
+				82B233BC2EAF1F6F00EEFE6A /* AllCategoriesView.swift */,
 				823B44632D6784B3009335A3 /* Drawgress */,
 				823B44742D6784B4009335A3 /* DrawgressTests */,
 				823B447E2D6784B4009335A3 /* DrawgresstUITests */,
@@ -236,6 +242,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82B233BD2EAF1F6F00EEFE6A /* AllCategoriesView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

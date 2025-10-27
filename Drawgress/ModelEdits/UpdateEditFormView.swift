@@ -19,6 +19,9 @@ struct UpdateEditFormView: View {
     @State private var showCamera = false
     @State private var isNewCategory = false
     @State private var selectedCategory: DrawingCategory?
+    @State private var showError = false
+    @State private var errorMessage = ""
+    
     
     
 
@@ -64,12 +67,41 @@ struct UpdateEditFormView: View {
 
     /// Saves the form data by either updating an existing prompt or creating a new one
     /// Uses two ViewModels, one to add the prompt to SwiftData and the other to modify the cover image
+    
+    private func validateFields() -> Bool{
+        
+        if vm.title.trimmingCharacters(in: .whitespaces).isEmpty {
+            showError = true
+            errorMessage  = "Title name cannot be empty"
+            return false
+            
+        }
+        
+        else if isNewCategory && vm.categoryName.trimmingCharacters(in: .whitespaces).isEmpty {
+               
+               showError = true
+               errorMessage = "Category name cannot be empty"
+               return false
+           }
+        
+        return true
+        
+       
+    }
+    
     private func handleSave() {
+        
+        guard validateFields() else {
+            return
+        }
+             
+        
+        
         if vm.isUpdating {
             vm.updatePrompt()
         } else {
             let prompt = vm.createPrompt()
-            let category = vm.createCategory()
+            let _ = vm.createCategory()
             
             dataModel.addPrompt(prompt: prompt)
 //            if isNewCategory {
@@ -94,62 +126,85 @@ struct UpdateEditFormView: View {
                 CustomTextField(title: "Title", text: $vm.title, )
            
             }
-            .padding(.horizontal)
+        .padding(.horizontal)
+         
     }
     
 
     private var categoryField: some View {
         VStack(alignment: .leading){
           
-            CustomHeader(title: "Category", icon: "menucard")
+            HStack {
+                CustomHeader(title: "Category", icon: "menucard")
+                  
+                Button("New") {
+                    isNewCategory.toggle()
+                }
+                
+            }
+            .padding(.horizontal)
+          
                
             
             if dataModel.categories.isEmpty || isNewCategory {
-                CustomTextField(title: "New Category", text: $vm.categoryName)
+                ZStack {
+                    CustomTextField(title: "New Category", text: $vm.categoryName)
+                    Spacer()
+                    ColorPicker("", selection: $vm.categoryColor)
+                       
+                }
+                .padding(.horizontal)
+              
                     
-            }
             
-            
-            ScrollView(.horizontal) {
+        
+            } else {
                 
-               
-             
+                
+                ScrollView(.horizontal) {
+                    
+                    
+                    
                     if !dataModel.categories.isEmpty {
                         
                         
-                        ForEach(dataModel.categories) { category in
-                            
-                            
-                            CategoryBubble(category: category, selectedCategory: $selectedCategory)
-                        }
+                        HStack {
+                               ForEach(dataModel.categories) { category in
+                                   CategoryBubble(
+                                       category: category,
+                                       selectedCategory: $selectedCategory
+                                   )
+                               }
+                           }
+                        .padding()
+                      
+                       }
                         
-                    }
                     
-                  
+                    
+                    
                 }
-            
-            .onChange(of: selectedCategory) {
-                vm.updateCategory(category: selectedCategory!)
+                
+                .onChange(of: selectedCategory) {
+                    vm.updateCategory(category: selectedCategory!)
+                }
             }
          
             
             
-            
-            Spacer()
-            
+         
             
             
             
-            if isNewCategory {
-                HStack(alignment: .center) {
-                    CustomTextField(title: "Category", text: $vm.categoryName,)
-                        .padding()
-                    ColorPicker("", selection: $vm.categoryColor)
-                        .frame(width: 50)
-                }
-            }
+           
         }
-        .padding()
+        .alert("One of the fields is empty!", isPresented: $showError) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text(errorMessage)
+        }
+       
+      
             
             
         
@@ -162,7 +217,7 @@ struct UpdateEditFormView: View {
             
             HStack {
              
-                
+                Spacer()
                 cameraPhotosField
             }
 
@@ -207,7 +262,7 @@ struct UpdateEditFormView: View {
     
     private var cameraPhotosField: some View {
         
-        HStack(spacing: 0){
+        HStack(spacing: 5){
             cameraButton()
             PhotosPicker(selection: $imagePicker.selectedItem) {
                 Image(systemName: "photo")
@@ -216,6 +271,9 @@ struct UpdateEditFormView: View {
             
             
         }
+        .padding(.horizontal)
+        
+        
     
         
         
