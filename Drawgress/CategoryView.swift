@@ -49,16 +49,20 @@ struct CategoryView: View {
                 }
             }
             
+            
             .background(Color.main)
             .navigationTitle("Drawgress")
-            .navigationDestination(for: DrawingCategory.self) { category in
-                PromptsView(prompts: category.prompts)
-            }
+           
+          
             .toolbar {
                addButton
             }
+            .navigationDestination(for: DrawingCategory.self) { category in
+                PromptsView(prompts: category.prompts)
+            }
             
         }
+       
         
      
         

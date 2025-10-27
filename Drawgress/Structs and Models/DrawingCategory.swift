@@ -9,8 +9,8 @@ import Foundation
 import SwiftData
 
 @Model
-class DrawingCategory {
-    
+class DrawingCategory{
+    @Attribute(.unique) var id = UUID()
     var name: String
     var colorHex: String?
     @Relationship var prompts: [DrawingPrompt] = []
@@ -27,6 +27,7 @@ class DrawingCategory {
    
     
     init(name: String , colorHex: String) {
+       
         self.name = name
         self.colorHex = colorHex
    

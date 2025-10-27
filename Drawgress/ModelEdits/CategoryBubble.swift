@@ -41,8 +41,6 @@ struct CategoryBubble: View {
         }
         
      
-
-        
         
     }
 }

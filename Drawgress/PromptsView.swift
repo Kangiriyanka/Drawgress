@@ -10,24 +10,44 @@ import SwiftUI
 struct PromptsView: View {
     
     var prompts: [DrawingPrompt]
+    @State private var searchText: String = ""
+    
+    
+    var filteredPrompts: [DrawingPrompt] {
+            if searchText.isEmpty {
+                return prompts
+            }
+            return prompts.filter { $0.title.localizedCaseInsensitiveContains(searchText) }
+        }
+    
+    
     var body: some View {
-        NavigationStack {
+        
+        VStack {
+            CustomSearchBar(text: $searchText)
+            
+            
             ScrollView(.vertical) {
                 LazyVGrid(
                     columns: Array(repeating: GridItem(.flexible(), spacing: 15), count: 2),
                     spacing: 20
                 ) {
-                    ForEach(prompts) { prompt in
-                        Text(prompt.title)
+                    ForEach(filteredPrompts) { prompt in
+                        PromptBubble(prompt : prompt)
                     }
                 }
                 
             }
-            .background(Color.main)
+           
             
         }
+        .background(Color.main)
     }
+      
+    
 }
+
+
 
 
 
