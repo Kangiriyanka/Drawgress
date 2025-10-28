@@ -10,10 +10,18 @@ import PhotosUI
 import SwiftData
 
 
-struct CategoryView: View {
+struct CategoriesView: View {
     
     @Environment(SwiftDataViewModel.self) var dataModel
     @State private var formType: ModelFormType?
+    @State private var searchText: String = ""
+    
+    var filteredCategories: [DrawingCategory] {
+            if searchText.isEmpty {
+                return dataModel.categories
+            }
+        return dataModel.categories.filter { $0.title.localizedCaseInsensitiveContains(searchText) }
+        }
     
 
     var body: some View {
@@ -30,28 +38,36 @@ struct CategoryView: View {
                 }
                 else {
                     
-                    ScrollView(.vertical) {
-                        LazyVGrid(
-                            columns: Array(repeating: GridItem(.flexible(), spacing: 15), count: 2),
-                            spacing: 20
-                        ) {
-                            ForEach(dataModel.categories) { category in
-                                NavigationLink(value: category) {
-                                    
-                                    categoryCard(category)
-                                    
+                    VStack {
+                       
+                        CustomSearchBar(
+                            text: $searchText, placeholder: "Search Categories"
+                           
+                        )
+                        ScrollView(.vertical) {
+                            LazyVGrid(
+                                columns: Array(repeating: GridItem(.flexible(), spacing: 15), count: 2),
+                                spacing: 20
+                            ) {
+                               
+                                ForEach(filteredCategories) { category in
+                                    NavigationLink(value: category) {
+                                        
+                                        categoryCard(category)
+                                        
+                                    }
                                 }
                             }
+                            .padding()
                         }
-                        .padding()
-                    }  
-                
+                        
+                    }
                 }
             }
             
             
             .background(Color.main)
-            .navigationTitle("Drawgress")
+         
            
           
             .toolbar {
@@ -73,7 +89,7 @@ struct CategoryView: View {
      private func categoryCard(_ category: DrawingCategory) -> some  View {
         
         VStack {
-            Text(category.name)
+            Text(category.title)
                 .foregroundStyle(.black)
                 .font(.title2)
                 .bold()

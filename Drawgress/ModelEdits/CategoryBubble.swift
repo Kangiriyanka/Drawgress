@@ -21,7 +21,7 @@ struct CategoryBubble: View {
                 selectedCategory = category
             }
         }) {
-            Text(category.name)
+            Text(category.title)
                 
                 .background(
                     category == selectedCategory ? Color(hex: category.colorHex!) : Color.clear

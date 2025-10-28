@@ -22,7 +22,7 @@ import SwiftData
         }
         
         func addSample() {
-            let category = DrawingCategory(name: "fruits", colorHex: "#FFC107")
+            let category = DrawingCategory(title: "fruits", colorHex: "#FFC107")
             let prompt = DrawingPrompt(title: "Apple", category: category)
             modelContext.insert(prompt)
             fetchPromptData()
@@ -57,7 +57,7 @@ import SwiftData
         
         func fetchCategories() {
                do {
-                   let descriptor = FetchDescriptor<DrawingCategory>(sortBy: [SortDescriptor(\.name)])
+                   let descriptor = FetchDescriptor<DrawingCategory>(sortBy: [SortDescriptor(\.title)])
                    categories = try modelContext.fetch(descriptor)
                    print(categories)
                } catch {

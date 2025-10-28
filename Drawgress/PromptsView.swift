@@ -11,6 +11,7 @@ struct PromptsView: View {
     
     var prompts: [DrawingPrompt]
     @State private var searchText: String = ""
+    @Namespace private var searchAnimation
     
     
     var filteredPrompts: [DrawingPrompt] {
@@ -24,7 +25,10 @@ struct PromptsView: View {
     var body: some View {
         
         VStack {
-            CustomSearchBar(text: $searchText)
+            CustomSearchBar(
+                text: $searchText
+               
+            )
             
             
             ScrollView(.vertical) {

@@ -83,7 +83,7 @@ class UpdateEditFormViewModel {
     func createCategory() -> DrawingCategory {
         
         let color = categoryColor.toHex() ?? ""
-        return DrawingCategory(name: categoryName , colorHex: color)
+        return DrawingCategory(title: categoryName , colorHex: color)
         
     }
     

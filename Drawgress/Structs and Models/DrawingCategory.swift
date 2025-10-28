@@ -11,24 +11,24 @@ import SwiftData
 @Model
 class DrawingCategory{
     @Attribute(.unique) var id = UUID()
-    var name: String
+    var title: String
     var colorHex: String?
     @Relationship var prompts: [DrawingPrompt] = []
     
     
 
-        static let animals = DrawingCategory(name: "animals", colorHex: "#FF6B6B")
-        static let foods  = DrawingCategory(name: "food", colorHex: "#4ECDC4")
-        static let shapes = DrawingCategory(name: "shapes", colorHex: "#45B7D1")
-        static let nature = DrawingCategory(name: "nature", colorHex: "#FFEAA7")
+        static let animals = DrawingCategory(title: "animals", colorHex: "#FF6B6B")
+        static let foods  = DrawingCategory(title: "food", colorHex: "#4ECDC4")
+        static let shapes = DrawingCategory(title: "shapes", colorHex: "#45B7D1")
+        static let nature = DrawingCategory(title: "nature", colorHex: "#FFEAA7")
     
     
       
    
     
-    init(name: String , colorHex: String) {
+    init(title: String , colorHex: String) {
        
-        self.name = name
+        self.title = title
         self.colorHex = colorHex
    
     }

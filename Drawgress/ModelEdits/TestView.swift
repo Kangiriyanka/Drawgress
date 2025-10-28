@@ -24,7 +24,7 @@ struct TestView: View {
         }
         
         List(viewModel.categories) { category in
-            Text(category.name)
+            Text(category.title)
         }
 
  

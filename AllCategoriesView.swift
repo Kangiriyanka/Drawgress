@@ -15,7 +15,7 @@ struct AllCategoriesView: View {
         
         var body: some View {
             List(dataModel.categories) { category in
-                Text(category.name)
+                Text(category.title)
             }
             .navigationTitle("All Categories")
         }

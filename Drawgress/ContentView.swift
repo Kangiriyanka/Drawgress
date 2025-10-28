@@ -13,7 +13,7 @@ struct ContentView: View {
         
         TabView {
             
-            CategoryView()
+            CategoriesView()
                 .tabItem {
                     Label("Categories", systemImage: "paintpalette")
                 }

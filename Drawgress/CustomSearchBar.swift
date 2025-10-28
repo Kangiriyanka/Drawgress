@@ -10,42 +10,69 @@ import SwiftUI
 
 struct CustomSearchBar: View {
     @Binding var text: String
-    var placeholder: String = "Search"
-
+    var placeholder: String = "Find a prompt"
+    @State private var isExpanded = false
+    @Namespace private var animation
+    
     var body: some View {
-        HStack(spacing: 8) {
-            Image(systemName: "magnifyingglass")
-                .foregroundColor(.gray)
-            
-            TextField(placeholder, text: $text)
-              
-                .foregroundColor(.primary)
-                .disableAutocorrection(true)
-                .textInputAutocapitalization(.none)
-            
-            if !text.isEmpty {
+        HStack(spacing: 0) {
+            if !isExpanded {
                 Button {
-                    withAnimation(.easeOut(duration: 0.2)) {
-                        text = ""
+                    withAnimation(.spring(response: 0.35, dampingFraction: 0.7)) {
+                        isExpanded = true
                     }
                 } label: {
-                    Image(systemName: "xmark.circle.fill")
-                        .foregroundColor(.accent.opacity(0.8))
-                        .transition(.scale)
+                    HStack {
+                        Image(systemName: "magnifyingglass")
+                            .foregroundColor(.accent)
+                            .fontWeight(.semibold)
+                            .matchedGeometryEffect(id: "icon", in: animation)
+                    }
+                    .padding()
+                    .background(
+                        Capsule()
+                            .fill(Color.main)
+                            .matchedGeometryEffect(id: "background", in: animation)
+                    )
+                 
                 }
+            } else {
+           
+                HStack {
+                    Image(systemName: "magnifyingglass")
+                        .foregroundColor(.gray)
+                        .matchedGeometryEffect(id: "icon", in: animation)
+                    
+                    TextField(placeholder, text: $text)
+                    
+                        .disableAutocorrection(true)
+                        .textInputAutocapitalization(.none)
+                        
+                  
+                    
+                    Button {
+                        withAnimation(.spring(response: 0.35, dampingFraction: 0.7)) {
+                            isExpanded = false
+                            text = ""
+                        }
+                    } label: {
+                        Image(systemName: "xmark")
+                            .foregroundColor(.accent)
+                            .font(.system(size: 14, weight: .semibold))
+                    }
+                   
+                }
+                .padding()
+                .background(
+                    Capsule()
+                        .fill(Color.main.opacity(0.3))
+                        .matchedGeometryEffect(id: "background", in: animation)
+                )
+               
             }
         }
-        .padding(.vertical, 10)
-        .padding(.horizontal, 12)
-        .background(
-            RoundedRectangle(cornerRadius: UIConstants.lgRadius)
-                .fill(Color.main.opacity(0.3))
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: UIConstants.lgRadius)
-                .stroke(Color.main.opacity(0.7), lineWidth: 1)
-        )
-        .padding(.horizontal)
-        .shadow(color: .black.opacity(0.05), radius: 3, x: 0, y: 1)
+        .padding()
+        .shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 3)
+        .frame(maxWidth: .infinity, maxHeight: 100, alignment: .trailing)
     }
 }
